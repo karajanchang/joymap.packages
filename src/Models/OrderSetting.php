@@ -10,8 +10,13 @@ class OrderSetting extends Model
     use HasFactory;
 
     protected $table = 'order_settings';
-    
+
     public $timestamps = false;
 
     protected $guarded = [];
+
+    public function store()
+    {
+        return $this->belongsTo(Store::class);
+    }
 }

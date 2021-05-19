@@ -13,5 +13,19 @@ class StoreServiceSetting extends Model
 
     public $timestamps = false;
 
+    protected $primaryKey = null;
+
+    public $incrementing = false;
+
     protected $guarded = [];
+
+    public function store()
+    {
+        return $this->belongsTo(Store::class);
+    }
+
+    public function service()
+    {
+        return $this->belongsTo(StoreService::class);
+    }
 }

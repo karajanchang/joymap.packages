@@ -15,7 +15,16 @@ class StoreRole extends Model
 
     public function store()
     {
-        return $this->belongsTo(Store::class, 'store_id', 'id');
+        return $this->belongsTo(Store::class);
+    }
+
+    public function users()
+    {
+        return $this->hasMany(StoreUser::class);
+    }
+
+    public function userPermissions()
+    {
+        return $this->hasMany(StoreUserPermission::class);
     }
 }
-

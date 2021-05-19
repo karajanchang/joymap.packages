@@ -10,8 +10,38 @@ class Order extends Model
     use HasFactory;
 
     protected $table = 'orders';
-    
+
     public $timestamps = true;
 
     protected $guarded = [];
+
+    public function member()
+    {
+        return $this->belongsTo(Member::class);
+    }
+
+    public function store()
+    {
+        return $this->belongsTo(Store::class);
+    }
+
+    public function goal()
+    {
+        return $this->belongsTo(Goal::class);
+    }
+
+    public function tagSettings()
+    {
+        return $this->hasMany(OrderTagSetting::class);
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    public function timeLogs()
+    {
+        return $this->hasMany(OrderTimeLog::class);
+    }
 }

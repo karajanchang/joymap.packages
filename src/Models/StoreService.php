@@ -15,4 +15,9 @@ class StoreService extends Model
     public $timestamps = true;
 
     protected $guarded = [];
+
+    public function settings()
+    {
+        return $this->hasMany(StoreServiceSetting::class);
+    }
 }

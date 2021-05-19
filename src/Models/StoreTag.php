@@ -15,4 +15,19 @@ class StoreTag extends Model
     public $timestamps = true;
 
     protected $guarded = [];
+
+    public function store()
+    {
+        return $this->belongsTo(Store::class);
+    }
+
+    public function memberTagSettings()
+    {
+        return $this->hasMany(MemberTagSetting::class);
+    }
+
+    public function orderTagSettings()
+    {
+        return $this->hasMany(OrderTagSetting::class);
+    }
 }

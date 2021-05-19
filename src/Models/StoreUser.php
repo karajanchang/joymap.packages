@@ -15,4 +15,24 @@ class StoreUser extends Model
     public $timestamps = true;
 
     protected $guarded = [];
+
+    public function store()
+    {
+        return $this->belongsTo(Store::class);
+    }
+
+    public function role()
+    {
+        return $this->belongsTo(StoreRole::class);
+    }
+
+    public function storeReplies()
+    {
+        return $this->hasMany(StoreReplie::class);
+    }
+
+    public function passwordValidates()
+    {
+        return $this->hasMany(StoreUserPasswordValidate::class);
+    }
 }

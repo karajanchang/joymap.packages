@@ -13,5 +13,19 @@ class MemberTagSetting extends Model
 
     public $timestamps = false;
 
+    protected $primaryKey = null;
+
+    public $incrementing = false;
+
     protected $guarded = [];
+
+    public function member()
+    {
+        return $this->belongsTo(Member::class);
+    }
+
+    public function storeTag()
+    {
+        return $this->belongsTo(StoreTag::class);
+    }
 }

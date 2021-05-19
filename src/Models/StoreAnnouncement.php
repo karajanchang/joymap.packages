@@ -14,4 +14,9 @@ class StoreAnnouncement extends Model
     public $timestamps = true;
 
     protected $guarded = [];
+
+    public function logs()
+    {
+        return $this->hasMany(StoreAnnouncementLog::class);
+    }
 }

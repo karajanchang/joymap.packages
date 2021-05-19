@@ -11,7 +11,19 @@ class StoreUserPasswordValidate extends Model
 
     protected $table = 'store_user_password_validates';
 
-    public $timestamps = true;
+    public $timestamps = ["created_at"];
+
+    const UPDATED_AT = null;
 
     protected $guarded = [];
+
+    public function store()
+    {
+        return $this->belongsTo(Store::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(StoreUser::class);
+    }
 }

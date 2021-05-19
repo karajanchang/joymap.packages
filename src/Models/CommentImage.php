@@ -13,4 +13,9 @@ class CommentImage extends Model
     protected $table = 'comment_images';
 
     protected $guarded = [];
+
+    public function comment()
+    {
+        return $this->belongsTo(Comment::class);
+    }
 }

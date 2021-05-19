@@ -13,4 +13,9 @@ class FoodType extends Model
     protected $table = 'food_types';
 
     protected $guarded = [];
+
+    public function stores()
+    {
+        return $this->hasMany(StoreFoodType::class);
+    }
 }
