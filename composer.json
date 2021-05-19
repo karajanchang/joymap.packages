@@ -1,0 +1,48 @@
+{
+    "name": "joymap/packages",
+    "description": "some tools",
+    "license": "MIT",
+    "keywords": [
+
+    ],
+    "authors": [
+        {
+            "name": "karajanchang",
+            "email": "karajanchang@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^7.2|^7.3|^7.4",
+        "illuminate/database": "^8.42",
+        "zhyu/packages": "0.4.0.14",
+        "illuminate/support": "^8.42"
+    },
+    "autoload": {
+        "psr-4": {
+            "Joymap\\": "src/"
+        },
+        "files": [
+            "src/Helpers/Helpers.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Joymap\\Tests\\Packages\\": "tests/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.1-dev"
+        },
+        "laravel": {
+            "providers": [
+                "Joymap\\JoymapServiceProvider"
+            ],
+            "aliases": {
+
+            }
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
