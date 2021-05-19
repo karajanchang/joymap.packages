@@ -12,4 +12,19 @@ class Member extends Model
     protected $table = 'members';
 
     protected $guarded = [];
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
+
+    public function tagSettings()
+    {
+        return $this->hasMany(MemberTagSetting::class);
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 }

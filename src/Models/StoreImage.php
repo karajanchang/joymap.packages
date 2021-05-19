@@ -14,4 +14,9 @@ class StoreImage extends Model
     public $timestamps = false;
 
     protected $guarded = [];
+
+    public function store()
+    {
+        return $this->belongsTo(Store::class);
+    }
 }

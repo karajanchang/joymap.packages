@@ -14,4 +14,14 @@ class StoreAnnouncementLog extends Model
     public $timestamps = true;
 
     protected $guarded = [];
+
+    public function store()
+    {
+        return $this->belongsTo(Store::class);
+    }
+
+    public function announcement()
+    {
+        return $this->belongsTo(StoreAnnouncement::class);
+    }
 }

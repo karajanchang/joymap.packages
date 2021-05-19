@@ -15,4 +15,9 @@ class StoreRestriction extends Model
     public $timestamps = true;
 
     protected $guarded = [];
+
+    public function stores()
+    {
+        return $this->hasMany(Store::class);
+    }
 }

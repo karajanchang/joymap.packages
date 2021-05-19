@@ -13,4 +13,34 @@ class Comment extends Model
     protected $table = 'comments';
 
     protected $guarded = [];
+
+    public function member()
+    {
+        return $this->belongsTo(Member::class);
+    }
+
+    public function order()
+    {
+        return $this->belongsTo(Order::class);
+    }
+
+    public function store()
+    {
+        return $this->belongsTo(Store::class);
+    }
+
+    public function storeReplies()
+    {
+        return $this->hasMany(StoreReplie::class);
+    }
+
+    public function scores()
+    {
+        return $this->hasMany(CommentScore::class);
+    }
+
+    public function images()
+    {
+        return $this->hasMany(CommentImage::class);
+    }
 }

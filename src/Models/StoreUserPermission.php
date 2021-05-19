@@ -13,5 +13,19 @@ class StoreUserPermission extends Model
 
     public $timestamps = false;
 
+    protected $primaryKey = null;
+
+    public $incrementing = false;
+
     protected $guarded = [];
+
+    public function role()
+    {
+        return $this->belongsTo(StoreRole::class);
+    }
+
+    public function permission()
+    {
+        return $this->belongsTo(StorePermission::class);
+    }
 }

@@ -13,4 +13,9 @@ class CommentScoreSetting extends Model
     protected $table = 'comment_score_settings';
 
     protected $guarded = [];
+
+    public function commentScores()
+    {
+        return $this->hasMany(CommentScore::class);
+    }
 }

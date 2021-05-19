@@ -13,5 +13,19 @@ class CommentScore extends Model
 
     public $timestamps = false;
 
+    protected $primaryKey = null;
+
+    public $incrementing = false;
+
     protected $guarded = [];
+
+    public function comment()
+    {
+        return $this->belongsTo(Comment::class);
+    }
+
+    public function setting()
+    {
+        return $this->belongsTo(CommentScoreSetting::class);
+    }
 }

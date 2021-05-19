@@ -8,11 +8,16 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Payment extends Model
 {
-    use HasFactory,SoftDeletes;
+    use HasFactory, SoftDeletes;
 
     protected $table = 'payments';
-    
+
     public $timestamps = true;
 
     protected $guarded = [];
+
+    public function storePayments()
+    {
+        return $this->hasMany(StorePayment::class);
+    }
 }

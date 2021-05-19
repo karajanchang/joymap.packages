@@ -13,4 +13,9 @@ class Goal extends Model
     protected $table = 'goals';
 
     protected $guarded = [];
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
 }
