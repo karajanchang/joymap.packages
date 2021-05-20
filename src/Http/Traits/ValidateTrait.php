@@ -7,8 +7,6 @@ use Illuminate\Support\MessageBag;
 
 Trait ValidateTrait
 {
-    use ControllerOutputTrait;
-
     /**
      * 拿到request和裝置的參數，並把二者合起來
      * @return array

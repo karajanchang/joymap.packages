@@ -82,8 +82,8 @@ abstract class ServiceAbstract
         $locale = Config::get('app.locale');
 
         $files = [
-            base_path('resources/languages/en/validation.php'),
-            base_path('vendor/joymap/packages/src/languages/'.$locale.'/validation.php')
+            base_path('resources/lang/en/validation.php'),
+            base_path('vendor/joymap/packages/src/lang/'.$locale.'/validation.php')
         ];
 
         foreach($files as $file){
