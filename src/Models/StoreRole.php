@@ -9,6 +9,11 @@ class StoreRole extends Model
 {
     use HasFactory;
 
+    protected static function newFactory()
+    {
+        return \Joymap\database\factories\StoreRoleFactory::new();
+    }
+
     protected $table = "store_roles";
 
     protected $guarded  = [];

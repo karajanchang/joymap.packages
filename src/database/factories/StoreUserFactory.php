@@ -1,6 +1,6 @@
 <?php
 
-namespace Joymap\Database\Factories;
+namespace Joymap\database\factories;
 
 use Joymap\Models\StoreUser;
 use Illuminate\Database\Eloquent\Factories\Factory;

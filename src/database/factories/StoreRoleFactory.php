@@ -1,18 +1,20 @@
 <?php
 
-namespace Database\Factories;
+namespace Joymap\database\factories;
 
-use App\Models\User;
+use Joymap\Models\StoreRole;
+use Joymap\Models\Store;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class UserFactory extends Factory
+class StoreRoleFactory extends Factory
 {
+
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = User::class;
+    protected $model = StoreRole::class;
 
     /**
      * Define the model's default state.
@@ -23,7 +25,10 @@ class UserFactory extends Factory
     {
         return [
             'name' => $this->faker->name,
-            'email' => $this->faker->unique()->safeEmail,
+            'store_id' => function () {
+                return Store::factory()->create()->id;
+            },
+            'is_active' => 1
         ];
     }
 }

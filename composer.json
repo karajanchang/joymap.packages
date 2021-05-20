@@ -19,8 +19,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Joymap\\": "src/",
-            "Joymap\\Database\\Factories\\": "database/factories"
+            "Joymap\\": "src/"
         },
         "files": [
             "src/Helpers/Helpers.php"
