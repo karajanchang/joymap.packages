@@ -5,6 +5,7 @@ namespace Joymap\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\DB;
 
 class Store extends Model
 {
@@ -20,6 +21,13 @@ class Store extends Model
     public $timestamps = true;
 
     protected $guarded = ['id'];
+
+    public function getLatLngAttribute()
+    {
+        $id =  $this->attributes['id'];
+        
+        return DB::table('stores')->find($id, array(DB::raw('ST_AsText(lat_lng) AS lat_lng')))->lat_lng;
+    }
 
     public function restriction()
     {
