@@ -25,7 +25,6 @@ class JoymapServiceProvider extends ServiceProvider
             return app()->make(\Twdd\Helpers\Bank::class);
         });
         */
-
         $this->registerAliases();
     }
 
