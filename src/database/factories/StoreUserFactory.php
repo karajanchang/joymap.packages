@@ -3,6 +3,7 @@
 namespace Joymap\database\factories;
 
 use Joymap\Models\StoreUser;
+use Joymap\Models\Store;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 
@@ -28,7 +29,9 @@ class StoreUserFactory extends Factory
             'password' => Hash::make($this->faker->numberBetween(1000, 100000)),
             'email' => $this->faker->email,
             'name' => $this->faker->name,
-            'store_id' => $this->faker->numberBetween(1, 10)
+            'store_id' => function () {
+                return Store::factory()->create()->id;
+            },
         ];
     }
 }
