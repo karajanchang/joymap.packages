@@ -10,6 +10,11 @@ class StoreUser extends Model
 {
     use HasFactory, SoftDeletes;
 
+    protected static function newFactory()
+    {
+        return \Joymap\database\factories\StoreUserFactory::new();
+    }
+
     protected $table = 'store_users';
 
     public $timestamps = true;
