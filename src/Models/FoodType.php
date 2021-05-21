@@ -14,6 +14,11 @@ class FoodType extends Model
 
     protected $guarded = [];
 
+    protected static function newFactory()
+    {
+        return \Joymap\database\factories\FoodTypeFactory::new();
+    }
+
     public function stores()
     {
         return $this->hasMany(StoreFoodType::class);
