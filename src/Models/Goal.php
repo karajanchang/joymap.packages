@@ -14,6 +14,11 @@ class Goal extends Model
 
     protected $guarded = [];
 
+    protected static function newFactory()
+    {
+        return \Joymap\database\factories\GoalFactory::new();
+    }
+
     public function orders()
     {
         return $this->hasMany(Order::class);
