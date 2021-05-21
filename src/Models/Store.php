@@ -84,7 +84,7 @@ class Store extends Model
         return $this->hasMany(StoreBusinessTime::class);
     }
 
-    public function foodTypes()
+    public function storeFoodTypes()
     {
         return $this->hasMany(StoreFoodType::class);
     }
@@ -117,5 +117,10 @@ class Store extends Model
     public function announcementLogs()
     {
         return $this->hasMany(StoreAnnouncementLog::class);
+    }
+
+    public function foodTypes()
+    {
+        return $this->belongsToMany(FoodType::class, 'store_food_types', 'store_id', 'food_type_id');
     }
 }
