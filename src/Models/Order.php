@@ -15,6 +15,11 @@ class Order extends Model
 
     protected $guarded = [];
 
+    protected static function newFactory()
+    {
+        return \Joymap\database\factories\OrderFactory::new();
+    }
+
     public function member()
     {
         return $this->belongsTo(Member::class);
