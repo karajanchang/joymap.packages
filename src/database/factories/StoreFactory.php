@@ -34,7 +34,7 @@ class StoreFactory extends Factory
             'address' => $this->faker->address,
             // 'phone' => $this->faker->phone,
             'status' => 1,
-            'lat_lng' => DB::raw("(GeomFromText('POINT(37.774929 -122.419415)'))")
+            'lat_lng' => DB::raw("(ST_GeomFromText('POINT(37.774929 -122.419415)'))")
         ];
     }
 }
