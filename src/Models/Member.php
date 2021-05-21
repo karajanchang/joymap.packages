@@ -13,6 +13,11 @@ class Member extends Model
 
     protected $guarded = [];
 
+    protected static function newFactory()
+    {
+        return \Joymap\database\factories\MemberFactory::new();
+    }
+
     public function orders()
     {
         return $this->hasMany(Order::class);
