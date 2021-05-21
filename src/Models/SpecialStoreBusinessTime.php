@@ -15,6 +15,11 @@ class SpecialStoreBusinessTime extends Model
 
     protected $guarded = [];
 
+    protected static function newFactory()
+    {
+        return \Joymap\database\factories\SpecialStoreBusinessTimeFactory::new();
+    }
+
     public function store()
     {
         return $this->belongsTo(Store::class);
