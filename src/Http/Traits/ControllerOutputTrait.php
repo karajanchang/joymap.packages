@@ -16,7 +16,7 @@ trait ControllerOutputTrait
      * @param int $code
      * @return array
      */
-    public function error($error = null, int $code = 0)
+    public function error($error = null, $code = '0')
     {
         return $this->output([
             'code' => $code,
@@ -63,7 +63,8 @@ trait ControllerOutputTrait
                 return 500;
             case '101':
                 return 422;
-
+            case '500':
+                return 500;
             default:
                 return 200;
         }
@@ -102,10 +103,10 @@ trait ControllerOutputTrait
                 'message' => $paramters['error']->getTraceAsString() ?? 'Some錯誤'
             ];
         }
-
+        
         $responseCode = $this->covertCodeToResponseCode($tmp['code']);
 
-        return response()->json($tmp, $responseCode);
+        return response()->json($tmp, $responseCode,[],JSON_FORCE_OBJECT);
     }
 
     /**
