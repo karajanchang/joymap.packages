@@ -35,9 +35,10 @@ class ErrorAbstract extends Error implements ArrayAccess
         parent::__construct($message, $code, $previous);
 
         $lang_path = $this->getLangPath();
-
+        
 
         $lang = include $lang_path;
+        
         $this->setAttributes($lang['attributes']);
     }
 

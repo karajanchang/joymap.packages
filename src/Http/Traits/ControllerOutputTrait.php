@@ -7,7 +7,7 @@ namespace Joymap\Http\Traits;
 use Illuminate\Support\Facades\Lang;
 use Joymap\Errors\ErrorAbstract;
 
-Trait ControllerOutputTrait
+trait ControllerOutputTrait
 {
     /**
      * 輸出錯誤response
@@ -16,9 +16,23 @@ Trait ControllerOutputTrait
      * @param int $code
      * @return array
      */
-    public function error($msg = null, $obj = null, int $code = 0){
+    public function error($error = null, int $code = 0)
+    {
+        return $this->output([
+            'code' => $code,
+            'error' => $error,
+        ]);
+    }
 
-        return $this->output($code, $msg, $obj);
+    public function validError($validMessage)
+    {
+        return $this->output([
+            'code' => '101',
+            'msg' => null,
+            'obj' => null,
+            'valid' => $validMessage,
+            'errorMessage' => 'HTTP驗證錯誤'
+        ]);
     }
 
     /**
@@ -27,9 +41,71 @@ Trait ControllerOutputTrait
      * @param null $obj
      * @return array
      */
-    public function success($msg = null, $obj = null){
+    public function success($msg = null, $obj = null)
+    {
+        return $this->output([
+            'code' => '1',
+            'msg' => $msg,
+            'obj' => $obj
+        ]);
+    }
 
-        return $this->output(0, $msg, $obj);
+    /**
+     * 將 code 轉換成 response code
+     *
+     * @param  mixed $code
+     * @return void
+     */
+    public function covertCodeToResponseCode(string $code = "1")
+    {
+        switch ($code) {
+            case '0':
+                return 500;
+            case '101':
+                return 422;
+
+            default:
+                return 200;
+        }
+    }
+
+    public function output(array $paramters)
+    {
+        $tmp = [
+            'code' => $paramters['code'] ?? '0',
+            'msg' => $paramters['msg'] ?? null,
+            'return' => $paramters['obj'] ?? [],
+            'error' => [],
+            'validate' => $paramters['valid'] ?? []
+        ];
+
+        // 當$msg未設定時 根據$code來設定$msg為預設值
+        if (!isset($tmp['msg'])) {
+            $tmp['msg'] = $tmp['code'] == '1' ? Lang::get('universal.response.msg.success') : Lang::get('universal.response.msg.error');
+        }
+
+        if (count($tmp['validate']) > 0) {
+            $tmp['error'] = [
+                'code' => $tmp['code'],
+                //TODO : unit 可能還要定義或不需要?
+                'unit' => 'driver',
+                'message' => $paramters['errorMessage'] ?? 'HTTP驗證錯誤'
+            ];
+        }
+
+        if (isset($paramters['error'])) {
+            $tmp['msg'] = $paramters['error']->getMessage();
+            $tmp['error'] = [
+                'code' => $tmp['code'],
+                //TODO : unit 可能還要定義或不需要?
+                'unit' => 'driver',
+                'message' => $paramters['error']->getTraceAsString() ?? 'Some錯誤'
+            ];
+        }
+
+        $responseCode = $this->covertCodeToResponseCode($tmp['code']);
+
+        return response()->json($tmp, $responseCode);
     }
 
     /**
@@ -40,26 +116,27 @@ Trait ControllerOutputTrait
      * @param array $valid
      * @return array
      */
-    public function output($code = null, $msg = null, $obj = null, $valid = []){
-        if(is_null($code)){
+    public function outputBK($code = null, $msg = null, $obj = null, $valid = [])
+    {
+        if (is_null($code)) {
             $code = 1;
         }
 
-        $pre = $code==1 ?   Lang::get('messages.success')   :   Lang::get('messages.error');
+        $pre = $code == 1 ?   Lang::get('messages.success')   :   Lang::get('messages.error');
 
         $rObj = new \stdClass();
         $rObj->code = $code;
         $rObj->msg = $pre;
         $rObj->return = null;
 
-        if(is_string($msg)) {
+        if (is_string($msg)) {
             $msg = is_null($msg) ?  $pre :   Lang::get($msg);
             $rObj->msg = $msg;
             $rObj->validate = $valid;
-        }elseif(is_array($msg)){
-            if(isset($msg['error'])){
+        } elseif (is_array($msg)) {
+            if (isset($msg['error'])) {
                 $errorObj = $msg['error'];
-                if(is_array($errorObj)){
+                if (is_array($errorObj)) {
 
                     return $msg;
                 }
@@ -72,17 +149,15 @@ Trait ControllerOutputTrait
 
                 $rObj->error = $error;
             }
-            if(isset($msg['msg'])){
+            if (isset($msg['msg'])) {
                 $valid = $msg['msg'];
                 $rObj->validate = $valid;
             }
-
         }
-        if(!is_null($obj)) {
+        if (!is_null($obj)) {
             $rObj->return = $obj;
         }
 
         return response()->json($rObj);
-
     }
 }

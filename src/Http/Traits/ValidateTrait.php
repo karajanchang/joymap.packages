@@ -40,6 +40,7 @@ Trait ValidateTrait
         if(!is_array($pars)) return new \Exception('Validate params is not array');
 
         $validate = Validator::make($pars, $rules);
+        // dd($validate->fails());
         if($validate->fails()){
             $msgs = $validate->messages();
 
