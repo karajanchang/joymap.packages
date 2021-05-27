@@ -51,7 +51,7 @@ class Store extends Model
 
     public function orderSettings()
     {
-        return $this->hasMany(OrderSetting::class);
+        return $this->hasOne(OrderSetting::class);
     }
 
     public function images()
