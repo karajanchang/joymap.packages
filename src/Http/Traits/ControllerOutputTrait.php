@@ -9,6 +9,17 @@ use Joymap\Errors\ErrorAbstract;
 
 trait ControllerOutputTrait
 {
+
+    /**
+     * 正式站錯誤Response
+     *
+     * @return void
+     */
+    public function productionError()
+    {
+        return $this->output([]);
+    }
+
     /**
      * 輸出錯誤response
      * @param null $msg
@@ -16,7 +27,7 @@ trait ControllerOutputTrait
      * @param int $code
      * @return array
      */
-    public function error($error = null, $code = '0')
+    public function error($error = null, $code = 0)
     {
         return $this->output([
             'code' => $code,
@@ -27,7 +38,7 @@ trait ControllerOutputTrait
     public function validError($validMessage)
     {
         return $this->output([
-            'code' => '101',
+            'code' => 101,
             'msg' => null,
             'obj' => null,
             'valid' => $validMessage,
@@ -44,7 +55,7 @@ trait ControllerOutputTrait
     public function success($msg = null, $obj = null)
     {
         return $this->output([
-            'code' => '1',
+            'code' => 1,
             'msg' => $msg,
             'obj' => $obj
         ]);
@@ -56,15 +67,14 @@ trait ControllerOutputTrait
      * @param  mixed $code
      * @return void
      */
-    public function covertCodeToResponseCode(string $code = "1")
+    public function covertCodeToResponseCode(int $code = 1)
     {
         switch ($code) {
-            case '0':
+            case 0:
+            case 500:
                 return 500;
-            case '101':
+            case 101:
                 return 422;
-            case '500':
-                return 500;
             default:
                 return 200;
         }
@@ -73,19 +83,20 @@ trait ControllerOutputTrait
     public function output(array $paramters)
     {
         $tmp = [
-            'code' => $paramters['code'] ?? '0',
+            'code' => $paramters['code'] ?? 0,
             'msg' => $paramters['msg'] ?? null,
             'return' => $paramters['obj'] ?? [],
-            'error' => [],
-            'validate' => $paramters['valid'] ?? []
+            'error' => new \stdClass(),
+            'validate' => $paramters['valid'] ?? new \stdClass()
+            // 'validate' => $paramters['valid'] ?? []
         ];
 
         // 當$msg未設定時 根據$code來設定$msg為預設值
         if (!isset($tmp['msg'])) {
-            $tmp['msg'] = $tmp['code'] == '1' ? Lang::get('universal.response.msg.success') : Lang::get('universal.response.msg.error');
+            $tmp['msg'] = $tmp['code'] == 1 ? Lang::get('universal.response.msg.success') : Lang::get('universal.response.msg.error');
         }
 
-        if (count($tmp['validate']) > 0) {
+        if (empty($tmp['validate'])) {
             $tmp['error'] = [
                 'code' => $tmp['code'],
                 //TODO : unit 可能還要定義或不需要?
@@ -103,10 +114,10 @@ trait ControllerOutputTrait
                 'message' => $paramters['error']->getTraceAsString() ?? 'Some錯誤'
             ];
         }
-        
+
         $responseCode = $this->covertCodeToResponseCode($tmp['code']);
 
-        return response()->json($tmp, $responseCode,[],JSON_FORCE_OBJECT);
+        return response()->json($tmp, $responseCode);
     }
 
     /**
