@@ -85,7 +85,7 @@ trait ControllerOutputTrait
         $tmp = [
             'code' => $paramters['code'] ?? 0,
             'msg' => $paramters['msg'] ?? null,
-            'return' => $paramters['obj'] ?? [],
+            'return' => $paramters['obj'] ?? new \stdClass(),
             'error' => new \stdClass(),
             'validate' => $paramters['valid'] ?? new \stdClass()
             // 'validate' => $paramters['valid'] ?? []
