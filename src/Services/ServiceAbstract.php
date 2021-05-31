@@ -9,6 +9,7 @@
 namespace Joymap\Services;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Config;
 use Joymap\Http\Traits\ValidateTrait;
 use Validator;
@@ -163,5 +164,37 @@ abstract class ServiceAbstract
         $this->validateAttribures();
 
         return $this->validateParams($params);
+    }
+
+    /**
+     * @param string $key
+     * @return bool
+     */
+    public function hasCache(string $key){
+
+        return Cache::has($key);
+    }
+
+    /**
+     * @param string $key
+     * @return mixed
+     */
+    public function fromCache(string $key){
+
+        return Cache::get($key);
+    }
+
+    /**
+     * @param string $key
+     * @param $data
+     * @param null $seconds
+     * @return bool
+     */
+    public function putCache(string $key, $data, $seconds = null){
+        if(is_null($seconds)){
+           $seconds = env('CACHE_DEFAULT_EXPIRED_SECONDS', 300);
+        }
+
+        return Cache::put($key, $data, $seconds);
     }
 }
