@@ -47,6 +47,6 @@ class Order extends Model
 
     public function timeLogs()
     {
-        return $this->hasMany(OrderTimeLog::class);
+        return $this->hasOne(OrderTimeLog::class);
     }
 }
