@@ -23,7 +23,7 @@ class StoreRestrictionFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->name . " Restriction",
+            'name' => $this->faker->numerify('Restriction ##'),
             'limit_minute' => $this->faker->randomElement([
                 0, 30, 60, 90, 120, 150
             ]),
