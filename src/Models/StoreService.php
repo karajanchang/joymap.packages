@@ -10,6 +10,11 @@ class StoreService extends Model
 {
     use HasFactory, SoftDeletes;
 
+    protected static function newFactory()
+    {
+        return \Joymap\database\factories\StoreServiceFactory::new();
+    }
+
     protected $table = 'store_services';
 
     public $timestamps = true;
