@@ -25,7 +25,7 @@ class Store extends Model
     public function getLatLngAttribute()
     {
         $id =  $this->attributes['id'];
-        
+
         return DB::table('stores')->find($id, array(DB::raw('ST_AsText(lat_lng) AS lat_lng')))->lat_lng;
     }
 
@@ -122,5 +122,15 @@ class Store extends Model
     public function foodTypes()
     {
         return $this->belongsToMany(FoodType::class, 'store_food_types', 'store_id', 'food_type_id');
+    }
+
+    public function storeService()
+    {
+        return $this->belongsToMany(StoreService::class, 'store_service_settings', 'store_id', 'store_service_id');
+    }
+
+    public function payments()
+    {
+        return $this->belongsToMany(Payment::class, 'store_payments', 'store_id', 'payment_id');
     }
 }
