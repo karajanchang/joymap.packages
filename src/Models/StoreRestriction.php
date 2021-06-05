@@ -10,6 +10,11 @@ class StoreRestriction extends Model
 {
     use HasFactory, SoftDeletes;
 
+    protected static function newFactory()
+    {
+        return \Joymap\database\factories\StoreRestrictionFactory::new();
+    }
+
     protected $table = 'store_restrictions';
 
     public $timestamps = true;
