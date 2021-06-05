@@ -10,6 +10,11 @@ class Payment extends Model
 {
     use HasFactory, SoftDeletes;
 
+    protected static function newFactory()
+    {
+        return \Joymap\database\factories\PaymentFactory::new();
+    }
+
     protected $table = 'payments';
 
     public $timestamps = true;
