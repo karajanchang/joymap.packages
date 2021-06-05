@@ -185,6 +185,16 @@ abstract class ServiceAbstract
     }
 
     /**
+     * Alias of fromCache
+     * @param string $key
+     * @return mixed
+     */
+    public function getCache(string $key){
+
+        return $this->fromCache($key);
+    }
+
+    /**
      * @param string $key
      * @param $data
      * @param null $seconds
