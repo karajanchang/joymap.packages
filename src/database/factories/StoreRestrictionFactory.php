@@ -25,7 +25,7 @@ class StoreRestrictionFactory extends Factory
         return [
             'name' => $this->faker->numerify('Restriction ##'),
             'limit_minute' => $this->faker->randomElement([
-                0, 30, 60, 90, 120, 150
+                0, 30, 60, 90, 120
             ]),
         ];
     }
