@@ -126,7 +126,7 @@ class Store extends Model
 
     public function storeService()
     {
-        return $this->belongsToMany(StoreService::class, 'store_service_settings', 'store_id', 'store_service_id');
+        return $this->belongsToMany(StoreService::class, 'store_service_settings', 'store_id', 'store_service_id')->withPivot('status');
     }
 
     public function payments()
