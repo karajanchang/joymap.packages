@@ -20,4 +20,9 @@ class StorePermission extends Model
     {
         return $this->hasMany(StoreUserPermission::class);
     }
+
+    public function roles()
+    {
+        return $this->belongsToMany(StoreRole::class, 'store_user_permissions', 'store_permission_id', 'store_role_id');
+    }
 }
