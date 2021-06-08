@@ -16,6 +16,11 @@ class StoreTag extends Model
 
     protected $guarded = [];
 
+    protected static function newFactory()
+    {
+        return \Joymap\database\factories\StoreTagFactory::new();
+    }
+
     public function store()
     {
         return $this->belongsTo(Store::class);
