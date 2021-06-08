@@ -25,7 +25,7 @@ class StoreRole extends Model
 
     public function users()
     {
-        return $this->hasMany(StoreUser::class);
+        return $this->hasMany(StoreUser::class, 'role_id', 'id');
     }
 
     public function userPermissions()
