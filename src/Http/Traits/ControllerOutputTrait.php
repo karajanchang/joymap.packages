@@ -108,12 +108,12 @@ trait ControllerOutputTrait
         }
 
         if (isset($paramters['error'])) {
-            $tmp['msg'] = $paramters['error']->getMessage();
+            $tmp['msg'] = method_exists($paramters['error'], 'getMessage') ? $paramters['error']->getMessage() : $paramters['error'];
             $tmp['error'] = [
                 'code' => $tmp['code'],
                 //TODO : unit 可能還要定義或不需要?
                 'unit' => 'driver',
-                'message' => $paramters['error']->getTraceAsString() ?? 'Some錯誤'
+                'message' => method_exists($paramters['error'], 'getTraceAsString') ? $paramters['error']->getTraceAsString() : $paramters['error']
             ];
         }
 
