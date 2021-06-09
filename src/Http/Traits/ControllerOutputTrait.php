@@ -77,6 +77,8 @@ trait ControllerOutputTrait
                 return 422;
             case 401:
                 return 401;
+            case 403:
+                return 403;
             default:
                 return 200;
         }
