@@ -14,6 +14,11 @@ class CommentScoreSetting extends Model
 
     protected $guarded = [];
 
+    protected static function newFactory()
+    {
+        return \Joymap\database\factories\CommentScoreSettingFactory::new();
+    }
+
     public function commentScores()
     {
         return $this->hasMany(CommentScore::class);
