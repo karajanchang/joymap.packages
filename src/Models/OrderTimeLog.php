@@ -15,6 +15,11 @@ class OrderTimeLog extends Model
 
     protected $guarded = [];
 
+    protected static function newFactory()
+    {
+        return \Joymap\database\factories\OrderTimeLogFactory::new();
+    }
+
     public function order()
     {
         return $this->belongsTo(Order::class);
