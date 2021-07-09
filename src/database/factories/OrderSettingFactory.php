@@ -34,6 +34,7 @@ class OrderSettingFactory extends Factory
             'single_time_order_total' => $this->faker->numberBetween(0, 3),
             'final_order_minute' => $this->faker->randomElement([0, 15, 30]),
             'final_cancel_minute' => $this->faker->randomElement([0, 15, 30]),
+            'hold_order_minute' => $this->faker->randomElement([10, 15, 20, 25, 30])
         ];
     }
 }
