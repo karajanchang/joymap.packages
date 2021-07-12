@@ -31,7 +31,7 @@ class Store extends Model
 
     public function restriction()
     {
-        return $this->belongsTo(StoreRestriction::class);
+        return $this->belongsTo(StoreRestriction::class, 'store_restriction_id', 'id');
     }
 
     public function roles()
