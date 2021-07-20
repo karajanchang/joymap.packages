@@ -11,7 +11,7 @@ class StoreImage extends Model
 
     protected $table = 'store_images';
 
-    public $timestamps = false;
+    public $timestamps = true;
 
     protected $guarded = [];
 
