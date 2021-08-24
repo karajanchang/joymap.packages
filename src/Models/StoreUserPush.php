@@ -1,0 +1,16 @@
+<?php
+
+namespace Joymap\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class StoreUserPush extends Model
+{
+    use HasFactory;
+
+    protected $table = "store_user_push";
+
+    protected $guarded  = [];
+
+}
