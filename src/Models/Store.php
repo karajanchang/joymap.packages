@@ -133,4 +133,14 @@ class Store extends Model
     {
         return $this->belongsToMany(Payment::class, 'store_payments', 'store_id', 'payment_id');
     }
+
+    public function city()
+    {
+        return $this->belongsTo(City::class, 'city_id', 'id');
+    }
+
+    public function district()
+    {
+        return $this->belongsTo(District::class, 'district_id', 'id');
+    }
 }
