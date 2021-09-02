@@ -75,6 +75,8 @@ trait ControllerOutputTrait
                 return 500;
             case 101:
                 return 422;
+            case 400:
+                return 400;
             case 401:
                 return 401;
             case 403:
@@ -120,6 +122,10 @@ trait ControllerOutputTrait
         }
 
         $responseCode = $this->covertCodeToResponseCode($tmp['code']);
+
+        // 成功 code = 1, 失敗 code = 0, 捨棄 error object
+        $tmp['code'] = $tmp['code'] == 1 ? 1 : 0;
+        unset($tmp['error']);
 
         return response()->json($tmp, $responseCode);
     }
