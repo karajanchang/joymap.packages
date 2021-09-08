@@ -2,7 +2,6 @@
 
 namespace Joymap\Models;
 
-use Illuminate\Database\Eloquent\Model;
 
 class StoreContact extends Model
 {
