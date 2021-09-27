@@ -142,4 +142,9 @@ class Store extends Model
     {
         return $this->belongsTo(District::class, 'district_id', 'id');
     }
+
+    public function activityLogs()
+    {
+        return $this->hasMany(ActivityLog::class);
+    }
 }
