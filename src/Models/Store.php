@@ -147,4 +147,9 @@ class Store extends Model
     {
         return $this->hasMany(ActivityLog::class);
     }
+
+    public function activeTags()
+    {
+      return $this->belongsToMany(Tag::class, 'tag_settings');
+    }
 }
