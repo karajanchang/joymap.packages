@@ -22,4 +22,9 @@ class FoodType extends Model
     {
         return $this->hasMany(StoreFoodType::class);
     }
+
+    public function mainFoodType()
+    {
+        return $this->belongsTo(MainFoodType::class, 'id', 'main_food_type_id');
+    }
 }
