@@ -110,11 +110,10 @@ class Hitrustpay
                 if ($getUrl) {
                     return $redirectUrl;
                 }
-                $parts = parse_url($redirectUrl);
-                if (isset($parts['query'])) {
-                    parse_str($parts['query'], $query);
-                    return $query;
-                }
+                $partsQuery = $this->mb_parse_url($redirectUrl, PHP_URL_QUERY);
+                parse_str($partsQuery, $query);
+                return $query;
+
             }
 
             return json_decode($res->getBody()->getContents(), true);
@@ -126,5 +125,28 @@ class Hitrustpay
         }
 
         return false;
+    }
+
+    /**
+     * 解析網址中文問題
+     * @param $url
+     * @param int $component
+     * @return array|false|int|mixed|string|null
+     */
+    private function mb_parse_url($url, $component = -1) {
+        $encodedUrl = preg_replace_callback('%[^:/?#=\.]+%usD', function($matches) {
+            return urlencode($matches[0]);
+        }, $url);
+        $components = parse_url($encodedUrl, $component);
+        if (is_array($components)) {
+            foreach($components as &$part) {
+                if (is_string($part)) {
+                    $part = urldecode($part);
+                }
+            }
+        } else if (is_string($components)) {
+            $components = urldecode($components);
+        }
+        return $components;
     }
 }
