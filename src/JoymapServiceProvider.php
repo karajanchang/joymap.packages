@@ -30,7 +30,7 @@ class JoymapServiceProvider extends ServiceProvider
 
     public function boot(){
         if ($this->isLumen()) {
-            require_once 'Lumen.php';
+            require_once __DIR__.'/../Lumen.php';
         }
 
         if ($this->app->runningInConsole()) {
