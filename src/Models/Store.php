@@ -52,6 +52,11 @@ class Store extends Model
         return $this->hasOne(OrderSetting::class);
     }
 
+    public function spGateWay()
+    {
+        return $this->hasOne(StoreSpGateway::class);
+    }
+
     public function images()
     {
         return $this->hasMany(StoreImage::class);
