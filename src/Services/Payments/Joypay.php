@@ -129,7 +129,7 @@ class Joypay
         if (!$this->token) {
             throw new \Exception('請呼叫 token()', 422);
         }
-        if (!$this->expiry) {
+        if (($this->service instanceof Hitrustpay) && !$this->expiry) {
             throw new \Exception('請呼叫 expiry()', 422);
         }
         if (!$this->email) {
@@ -143,7 +143,7 @@ class Joypay
             'orderDesc' => '享樂支付',
             'depositFlag' => 1,
             'queryFlag' => 1,
-            'trxToken' => $this->token,
+            'token' => $this->token,
             'expiry' => $this->expiry,
             'returnUrl' => $this->returnUrl,
             'callbackUrl' => $this->callbackUrl,

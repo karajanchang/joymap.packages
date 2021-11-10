@@ -96,7 +96,7 @@ class Hitrustpay implements pay
             'queryflag' => $params['queryFlag'] ?? 1,
             'returnURL' => $params['returnUrl'] ?? $this->callbackUrl,
             'merUpdateURL' => $params['callbackUrl'] ?? $this->callbackUrl,
-            'trxToken' => $params['trxToken'],
+            'trxToken' => $params['token'],
             'expiry' => $params['expiry'],
         ];
 
