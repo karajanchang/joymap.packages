@@ -4,7 +4,7 @@ namespace Joymap\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class StoreSpgateway extends Model
+class StoreSpGateway extends Model
 {
     use HasFactory;
 
@@ -12,7 +12,11 @@ class StoreSpgateway extends Model
 
     protected $guarded  = [];
 
-    public $timestamps = false;
+    protected $casts = [
+        'post_data' => 'array',
+        'response_data' => 'array',
+        'callback_data' => 'array',
+    ];
 
     public function store()
     {
