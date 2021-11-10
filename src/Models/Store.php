@@ -151,4 +151,9 @@ class Store extends Model
     {
       return $this->belongsToMany(Tag::class, 'tag_settings');
     }
+
+    public function storeSpgateway()
+    {
+        return $this->hasOne(StoreSpgateway::class);
+    }
 }
