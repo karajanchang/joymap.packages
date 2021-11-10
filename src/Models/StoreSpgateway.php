@@ -4,7 +4,7 @@ namespace Joymap\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class StoreSpGateway extends Model
+class StoreSpgateway extends Model
 {
     use HasFactory;
 
