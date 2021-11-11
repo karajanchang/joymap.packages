@@ -11,4 +11,5 @@ interface pay
     public function bindCard(array $params);
     public function pay(array $params);
     public function cancel(array $params);
+    public function query(array $params);
 }

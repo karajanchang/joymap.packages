@@ -27,6 +27,9 @@ class Hitrustpay implements pay
         return 100;
     }
 
+    /**
+     * @throws \Exception
+     */
     public function setStore(Store $store): Hitrustpay
     {
         $this->store = $store;
@@ -101,6 +104,12 @@ class Hitrustpay implements pay
         ];
 
         return $this->post($params);
+    }
+
+    public function query(array $params)
+    {
+        // TODO: Implement query() method.
+        return [];
     }
 
     public function post($params, $getUrl = false)

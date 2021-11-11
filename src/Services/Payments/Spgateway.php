@@ -7,7 +7,6 @@ use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\TransferStats;
 use Illuminate\Support\Facades\Log;
 use Joymap\Models\Store;
-use Joymap\Models\StoreSpgateway;
 
 class Spgateway implements pay
 {
@@ -19,19 +18,26 @@ class Spgateway implements pay
         return 1;
     }
 
+    /**
+     * @throws \Exception
+     */
     public function setStore(Store $store): Spgateway
     {
         $this->store = $store;
-        if (!$this->store->storeSpgateway) {
-            throw new \Exception('商店沒有 store_spgateway', 422);
+        if (
+            empty($this->store->storeSpgateway->merchant_id) ||
+            empty($this->store->storeSpgateway->merchant_iv_key) ||
+            empty($this->store->storeSpgateway->merchant_hash_key)
+        ) {
+            throw new \Exception('智付通商店尚未啟用', 422);
+        }
+        if (($this->store->can_pay ?? 0) == 0) {
+            throw new \Exception('商店未啟用支付功能', 422);
         }
         return $this;
     }
 
-    /**
-     * 綁卡
-     * @throws \Exception
-     */
+    // 綁卡
     public function bindCard(array $params)
     {
         $this->url = env('SPGATEWAY_CREDIT_CARD_URL', 'https://ccore.spgateway.com/API/CreditCard');
@@ -54,10 +60,7 @@ class Spgateway implements pay
         return $this->post($params);
     }
 
-    /**
-     * 刷卡
-     * @throws \Exception
-     */
+    // 刷卡
     public function pay(array $params)
     {
         $this->url = env('SPGATEWAY_CREDIT_CARD_URL', 'https://ccore.spgateway.com/API/CreditCard');
@@ -76,10 +79,7 @@ class Spgateway implements pay
         return $this->post($params);
     }
 
-    /**
-     * 取消授權
-     * @throws \Exception
-     */
+    // 取消授權
     public function cancel($params)
     {
         $this->url = env('SPGATEWAY_CANCEL_URL', 'https://ccore.spgateway.com/API/CreditCard/Cancel');
@@ -95,6 +95,38 @@ class Spgateway implements pay
         return $this->post($params);
     }
 
+    // 查詢訂單
+    public function query($params)
+    {
+        $this->url = env('SPGATEWAY_QUERY_URL', 'https://ccore.spgateway.com/API/QueryTradeInfo');
+        $params = [
+            'MerchantID' => $this->store->storeSpgateway->merchant_id,
+            'MerchantOrderNo' => $params['orderNumber'],
+            'Amt' => $params['amount'],
+        ];
+        $params = $this->preparePostDataHasCkcekValue($params);
+        return $this->post($params);
+    }
+
+    private function preparePostDataHasCkcekValue(array $data)
+    {
+        ksort($data);
+        $CheckValue = sprintf(
+            'IV=%s&%s&Key=%s',
+            $this->store->storeSpgateway->merchant_iv_key,
+            http_build_query($data),
+            $this->store->storeSpgateway->merchant_hash_key
+        );
+        $CheckValue = strtoupper(hash("sha256", $CheckValue));
+        $data['Version'] = '1.1';
+        $data['RespondType'] = 'JSON';
+        $data['TimeStamp'] = time();
+        $data['CheckValue'] = $CheckValue;
+        Log::info('preparePostDataHasCkcekValue 最後送出的資料：', $data);
+
+        return $data;
+    }
+
     private function preparePostData(array $data): array
     {
         $postDataStr = http_build_query($data);
@@ -105,7 +137,7 @@ class Spgateway implements pay
             'Pos_' => 'JSON',
             'PostData_' => $encryptData,
         ];
-        Log::info('付款最後送出的資料：', $postData);
+        Log::info('preparePostData 最後送出的資料：', $postData);
 
         return $postData;
     }
@@ -134,10 +166,6 @@ class Spgateway implements pay
 
     private function post($params)
     {
-        if (!$this->url) {
-            throw new \Exception('url is null', 422);
-        }
-
         try {
             $client = new Client();
             $res = $client->post(
