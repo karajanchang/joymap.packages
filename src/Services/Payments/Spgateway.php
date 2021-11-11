@@ -31,9 +31,6 @@ class Spgateway implements pay
         ) {
             throw new \Exception('智付通商店尚未啟用', 422);
         }
-        if (($this->store->can_pay ?? 0) == 0) {
-            throw new \Exception('商店未啟用支付功能', 422);
-        }
         return $this;
     }
 
@@ -106,6 +103,36 @@ class Spgateway implements pay
         ];
         $params = $this->preparePostDataHasCkcekValue($params);
         return $this->post($params);
+    }
+
+    // 跟 store 抽費用到 金流合作推廣商 (SPGATEWAY_STORE_PARTNER_ID)
+    public function chargeInstruct($params)
+    {
+        $this->url = env('SPGATEWAY_CHARGE_INSTRUCT_URL', 'https://ccore.spgateway.com/API/ChargeInstruct');
+        $params = [
+            'Version' => '1.0',
+            'TimeStamp' => time(),
+            'MerchantID' => $this->store->storeSpgateway->merchant_id,
+            'Amount' => $params['amount'],
+            'FeeType' => $params['fee_type'] ?? 4, // 4 其他費用
+            'BalanceType' => $params['balance_type'] ?? 0, // 0為正向，1為負向。 例:平台商向合作商店收取費用時，則 填入0;平台商退還費用給合作商店 時，則填入1。
+        ];
+        $params = $this->preparePostDataUsePartnerId($params);
+        return $this->post($params);
+    }
+
+    private function preparePostDataUsePartnerId(array $data): array
+    {
+        $postDataStr = http_build_query($data);
+        $encryptData = $this->encrypt($postDataStr);
+
+        $postData = [
+            'PartnerID_' => env('SPGATEWAY_STORE_PARTNER_ID', 'TWDD'),
+            'PostData_' => $encryptData,
+        ];
+        Log::info('preparePostDataUsePartnerId 最後送出的資料：', $postData);
+
+        return $postData;
     }
 
     private function preparePostDataHasCkcekValue(array $data)
