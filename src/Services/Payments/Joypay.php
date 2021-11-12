@@ -147,6 +147,7 @@ class Joypay
             'expiry' => $this->expiry,
             'returnUrl' => $this->returnUrl,
             'callbackUrl' => $this->callbackUrl,
+            'email' => $this->email,
         ];
 
         $this->reset();
@@ -196,6 +197,7 @@ class Joypay
             'e55' => 1,
             'returnUrl' => $this->returnUrl,
             'callbackUrl' => $this->callbackUrl,
+            'email' => $this->email,
         ];
 
         $this->reset();
