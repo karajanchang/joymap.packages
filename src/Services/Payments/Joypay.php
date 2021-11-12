@@ -117,7 +117,7 @@ class Joypay
      */
     public function pay()
     {
-        if (!$this->store || !$this->storeId) {
+        if (!$this->store && !$this->storeId) {
             throw new \Exception('請呼叫 store() 或 storeId()', 422);
         }
         if (!$this->orderNumber) {
@@ -158,7 +158,7 @@ class Joypay
      */
     public function bindCard()
     {
-        if (!$this->store || !$this->storeId) {
+        if (!$this->store && !$this->storeId) {
             throw new \Exception('請呼叫 store() 或 storeId()', 422);
         }
         if (!$this->cardNo) {
@@ -213,7 +213,7 @@ class Joypay
         if (!$this->amount) {
             throw new \Exception('請呼叫 money()', 422);
         }
-        if (!$this->store || !$this->storeId) {
+        if (!$this->store && !$this->storeId) {
             throw new \Exception('請呼叫 store() 或 storeId()', 422);
         }
 
@@ -240,7 +240,7 @@ class Joypay
         if (!$this->amount) {
             throw new \Exception('請呼叫 money()', 422);
         }
-        if (!$this->store || !$this->storeId) {
+        if (!$this->store && !$this->storeId) {
             throw new \Exception('請呼叫 store() 或 storeId()', 422);
         }
 
