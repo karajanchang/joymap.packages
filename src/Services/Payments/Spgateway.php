@@ -124,7 +124,7 @@ class Spgateway implements pay
     private function preparePostDataUsePartnerId(array $data): array
     {
         $postDataStr = http_build_query($data);
-        $encryptData = $this->encrypt($postDataStr);
+        $encryptData = $this->encrypt($postDataStr, env('SPGATEWAY_MERCHANT_HASH_KEY'), env('SPGATEWAY_MERCHANT_IV_KEY'));
 
         $postData = [
             'PartnerID_' => env('SPGATEWAY_STORE_PARTNER_ID', 'TWDD'),
@@ -169,15 +169,15 @@ class Spgateway implements pay
         return $postData;
     }
 
-    private function encrypt($str = ''): string
+    private function encrypt($str = '', $merchantHashKey = '', $merchantIvKey = ''): string
     {
         $str = $this->addPadding($str);
         $str = openssl_encrypt(
             $str,
             'aes-256-cbc',
-            $this->store->storeSpgateway->merchant_hash_key,
+            $merchantHashKey ?: $this->store->storeSpgateway->merchant_hash_key,
             OPENSSL_RAW_DATA | OPENSSL_ZERO_PADDING,
-            $this->store->storeSpgateway->merchant_iv_key
+            $merchantIvKey ?: $this->store->storeSpgateway->merchant_iv_key
         );
         return trim(bin2hex($str));
     }
