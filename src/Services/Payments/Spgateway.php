@@ -49,7 +49,7 @@ class Spgateway implements pay
             'Exp' => $params['expiry'],
             'CVC' => $params['cvc'],
             'TokenSwitch' => 'get',// 拿 token 使用 get
-            'TokenTerm' => $params['email'],
+            'TokenTerm' => 'JOYMAP',
             'TokenLife' => $params['expiry'],
         ];
 
@@ -69,7 +69,7 @@ class Spgateway implements pay
             'ProdDesc' => $params['orderDesc'],
             'PayerEmail' => $params['email'],
             'TokenValue' => $params['token'],
-            'TokenTerm' => $params['email'],
+            'TokenTerm' => 'JOYMAP',
             'TokenSwitch' => 'on',// 刷卡使用 on
         ];
         $params = $this->preparePostData($params);
