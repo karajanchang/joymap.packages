@@ -164,7 +164,10 @@ class Spgateway implements pay
             'Pos_' => 'JSON',
             'PostData_' => $encryptData,
         ];
-        Log::info('preparePostData 最後送出的資料：', $postData);
+
+        if (env('APP_ENV') != 'production') {
+            Log::info('preparePostData 最後送出的資料：', $postData);
+        }
 
         return $postData;
     }
