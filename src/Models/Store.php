@@ -157,7 +157,7 @@ class Store extends Model
         return $this->hasOne(StoreSpgateway::class);
     }
 
-    public function rank()
+    public function ranking()
     {
         return $this->hasOne(Ranking::class);
     }
