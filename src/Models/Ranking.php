@@ -13,4 +13,9 @@ class Ranking extends Model
     public $timestamps = true;
 
     protected $guarded = [];
+
+    public function store()
+    {
+        return $this->belongsTo(Store::class);
+    }
 }
