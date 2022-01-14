@@ -31,4 +31,9 @@ class Member extends Model
     {
         return $this->hasMany(Comment::class);
     }
+
+    public function notificationOrder()
+    {
+        return $this->hasMany(NotificationOrder::class);
+    }
 }
