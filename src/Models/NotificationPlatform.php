@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace Joymap\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
