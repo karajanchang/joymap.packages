@@ -18,4 +18,17 @@ class NotificationMemberRead extends Model
     const UPDATED_AT = null;
 
     protected $guarded = [];
+
+    /* -------------------------------------------------------------------------- */
+    /*                                  RELATIONS                                 */
+    /* -------------------------------------------------------------------------- */
+    public function notification()
+    {
+        return $this->belongsTo(Notification::class);
+    }
+
+    public function member()
+    {
+        return $this->belongsTo(Member::class);
+    }
 }

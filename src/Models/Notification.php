@@ -15,4 +15,18 @@ class Notification extends Model
     const UPDATED_AT = null;
 
     protected $guarded = [];
+
+
+    /* -------------------------------------------------------------------------- */
+    /*                                  RELATIONS                                 */
+    /* -------------------------------------------------------------------------- */
+    public function notify()
+    {
+        return $this->morphTo();
+    }
+
+    public function notificationMemberRead()
+    {
+        return $this->hasOne(NotificationMemberRead::class);
+    }
 }

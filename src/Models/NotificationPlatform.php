@@ -11,4 +11,9 @@ class NotificationPlatform extends Model
     protected $table = 'notification_platform';
 
     protected $guarded = [];
+
+    public function notify()
+    {
+        return $this->morphOne(Notification::class, 'notify');
+    }
 }

@@ -21,4 +21,9 @@ class NotificationOrder extends Model
     {
         return $this->belongsTo(Member::class);
     }
+
+    public function notify()
+    {
+        return $this->morphOne(Notification::class, 'notify');
+    }
 }
