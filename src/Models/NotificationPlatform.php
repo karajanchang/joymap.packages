@@ -11,6 +11,11 @@ class NotificationPlatform extends Model
     protected $table = 'notification_platform';
 
     protected $guarded = [];
+    
+    public function getMorphClass()
+    {
+        return $this->getTable();
+    }
 
     public function notify()
     {

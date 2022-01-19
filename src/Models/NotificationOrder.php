@@ -12,6 +12,11 @@ class NotificationOrder extends Model
 
     protected $guarded = [];
 
+    public function getMorphClass()
+    {
+        return $this->getTable();
+    }
+
     public function order()
     {
         return $this->belongsTo(Order::class);
