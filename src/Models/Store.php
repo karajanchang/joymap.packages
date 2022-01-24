@@ -161,4 +161,9 @@ class Store extends Model
     {
         return $this->hasOne(Ranking::class);
     }
+
+    public function notificationStorePay()
+    {
+        return $this->hasOne(NotificationStorePay::class);
+    }
 }
