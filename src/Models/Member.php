@@ -46,4 +46,9 @@ class Member extends Model
     {
         return $this->belongsTo(District::class, 'district_id', 'id');
     }
+
+    public function memberDeviceTokens()
+    {
+        return $this->hasMany(MemberPush::class, 'member_id', 'id');
+    }
 }
