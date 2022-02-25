@@ -21,4 +21,9 @@ class NotificationPlatform extends Model
     {
         return $this->morphOne(Notification::class, 'notify');
     }
+
+    public function logs()
+    {
+        return $this->hasMany(NotificationPlatformLogs::class, 'notification_platform_id', 'id');
+    }
 }
