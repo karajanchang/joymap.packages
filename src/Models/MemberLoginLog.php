@@ -14,6 +14,8 @@ class MemberLoginLog extends Model
 
     public $timestamps = ["created_at"];
 
+    const UPDATED_AT = null;
+
     public function member()
     {
         return $this->belongsTo(Member::class);
