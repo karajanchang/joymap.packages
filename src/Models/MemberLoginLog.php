@@ -16,6 +16,10 @@ class MemberLoginLog extends Model
 
     const UPDATED_AT = null;
 
+    protected $casts = [
+        'origin_request_header' => 'array'
+    ];
+
     public function member()
     {
         return $this->belongsTo(Member::class);
