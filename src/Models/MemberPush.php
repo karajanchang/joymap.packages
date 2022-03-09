@@ -11,4 +11,9 @@ class MemberPush extends Model
     protected $table = 'member_push';
 
     protected $guarded = [];
+
+    public function member()
+    {
+        return $this->belongsTo(Member::class);
+    }
 }
