@@ -2,12 +2,14 @@
 
 namespace Joymap\Services\Payments;
 
+use Joymap\Models\Store;
 
 class Joypay
 {
-    private $hitrust;
+    private $service;
     private $token;
     private $amount;
+    private $store;
     private $storeId;
     private $orderNumber;
     private $expiry;
@@ -16,15 +18,33 @@ class Joypay
     private $phone;
     private $returnUrl = null;
     private $callbackUrl = null;
+    private $email;
 
-    public function __construct()
+    /**
+     * @throws \Exception
+     */
+    public function bySpgateway(): Joypay
     {
-        $this->hitrust = app(Hitrustpay::class);
+        $this->service = app(Spgateway::class);
+        return $this;
+    }
+
+    public function byHitrustpay(): Joypay
+    {
+        $this->service = app(Hitrustpay::class);
+        return $this;
     }
 
     public function storeId($storeId): Joypay
     {
         $this->storeId = $storeId;
+        return $this;
+    }
+
+    public function store(Store $store): Joypay
+    {
+        $this->store = $store;
+        $this->service->setStore($store);
         return $this;
     }
 
@@ -36,7 +56,7 @@ class Joypay
 
     public function money($amount): Joypay
     {
-        $this->amount = $amount * 100;
+        $this->amount = $amount * $this->service->getAmountMultiplicand();
         return $this;
     }
 
@@ -70,15 +90,9 @@ class Joypay
         return $this;
     }
 
-    public function returnUrl($returnUrl): Joypay
+    public function email($email): Joypay
     {
-        $this->returnUrl = $returnUrl;
-        return $this;
-    }
-
-    public function callbackUrl($callbackUrl): Joypay
-    {
-        $this->callbackUrl = $callbackUrl;
+        $this->email = $email;
         return $this;
     }
 
@@ -87,6 +101,7 @@ class Joypay
         $this->token = null;
         $this->amount = null;
         $this->storeId = null;
+        $this->store = null;
         $this->orderNumber = null;
         $this->expiry = null;
         $this->cvc = null;
@@ -94,18 +109,16 @@ class Joypay
         $this->phone = null;
         $this->returnUrl = null;
         $this->callbackUrl = null;
+        $this->email = null;
     }
 
     /**
-     * @return mixed
-     *          false: 連線失敗
-     *          array: hitrust 回應
      * @throws \Exception
      */
     public function pay()
     {
-        if (!$this->storeId) {
-            throw new \Exception('請呼叫 storeId()', 422);
+        if (!$this->store && !$this->storeId) {
+            throw new \Exception('請呼叫 store() 或 storeId()', 422);
         }
         if (!$this->orderNumber) {
             throw new \Exception('請呼叫 orderNo()', 422);
@@ -116,8 +129,11 @@ class Joypay
         if (!$this->token) {
             throw new \Exception('請呼叫 token()', 422);
         }
-        if (!$this->expiry) {
+        if (($this->service instanceof Hitrustpay) && !$this->expiry) {
             throw new \Exception('請呼叫 expiry()', 422);
+        }
+        if (!$this->email) {
+            throw new \Exception('請呼叫 email()', 422);
         }
 
         $params = [
@@ -127,23 +143,25 @@ class Joypay
             'orderDesc' => '享樂支付',
             'depositFlag' => 1,
             'queryFlag' => 1,
-            'trxToken' => $this->token,
+            'token' => $this->token,
             'expiry' => $this->expiry,
             'returnUrl' => $this->returnUrl,
             'callbackUrl' => $this->callbackUrl,
+            'email' => $this->email,
         ];
 
         $this->reset();
-        return $this->hitrust->authTrxToken($params);
+        return $this->service->pay($params);
     }
 
     /**
-     * @return mixed false: 連線失敗
-     *               string: 接續網址
      * @throws \Exception
      */
     public function bindCard()
     {
+        if (!$this->store && !$this->storeId) {
+            throw new \Exception('請呼叫 store() 或 storeId()', 422);
+        }
         if (!$this->cardNo) {
             throw new \Exception('請呼叫 cardNo()', 422);
         }
@@ -156,8 +174,8 @@ class Joypay
         if (!$this->phone) {
             throw new \Exception('請呼叫 phone()', 422);
         }
-        if (!$this->storeId) {
-            $this->storeId(env('HITRUST_BIND_CARD_STORE_ID', 62493));
+        if (!$this->email) {
+            throw new \Exception('請呼叫 email()', 422);
         }
         if (!$this->amount) {
             $this->money(1);
@@ -179,32 +197,62 @@ class Joypay
             'e55' => 1,
             'returnUrl' => $this->returnUrl,
             'callbackUrl' => $this->callbackUrl,
+            'email' => $this->email,
         ];
 
         $this->reset();
-        return $this->hitrust->auth($params);
+        return $this->service->bindCard($params);
     }
 
     /**
      * @throws \Exception
      */
-    public function authReverse()
+    public function cancel()
     {
         if (!$this->orderNumber) {
             throw new \Exception('請呼叫 orderNo()', 422);
         }
-        if (!$this->storeId) {
-            $this->storeId(env('HITRUST_BIND_CARD_STORE_ID', 62493));
+        if (!$this->amount) {
+            throw new \Exception('請呼叫 money()', 422);
+        }
+        if (!$this->store && !$this->storeId) {
+            throw new \Exception('請呼叫 store() 或 storeId()', 422);
         }
 
         $params = [
             'storeId' => $this->storeId,
             'orderNumber' => $this->orderNumber,
+            'amount' => $this->amount,
             'queryFlag' => 1,
             'callbackUrl' => $this->callbackUrl,
         ];
 
         $this->reset();
-        return $this->hitrust->authRe($params);
+        return $this->service->cancel($params);
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function query()
+    {
+        if (!$this->orderNumber) {
+            throw new \Exception('請呼叫 orderNo()', 422);
+        }
+        if (!$this->amount) {
+            throw new \Exception('請呼叫 money()', 422);
+        }
+        if (!$this->store && !$this->storeId) {
+            throw new \Exception('請呼叫 store() 或 storeId()', 422);
+        }
+
+        $params = [
+            'storeId' => $this->storeId,
+            'orderNumber' => $this->orderNumber,
+            'amount' => $this->amount,
+        ];
+
+        $this->reset();
+        return $this->service->query($params);
     }
 }

@@ -31,4 +31,24 @@ class Member extends Model
     {
         return $this->hasMany(Comment::class);
     }
+
+    public function notificationOrder()
+    {
+        return $this->hasMany(NotificationOrder::class);
+    }
+
+    public function city()
+    {
+        return $this->belongsTo(City::class, 'city_id', 'id');
+    }
+
+    public function district()
+    {
+        return $this->belongsTo(District::class, 'district_id', 'id');
+    }
+
+    public function memberDeviceTokens()
+    {
+        return $this->hasMany(MemberPush::class, 'member_id', 'id');
+    }
 }

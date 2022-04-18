@@ -6,12 +6,14 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\TransferStats;
 use Illuminate\Support\Facades\Log;
+use Joymap\Models\Store;
 
-class Hitrustpay
+class Hitrustpay implements pay
 {
     private $url;
     private $refererUrl;
     private $callbackUrl;
+    private $store;
 
     public function __construct()
     {
@@ -20,11 +22,28 @@ class Hitrustpay
         $this->callbackUrl = env('HITRUST_CALLBACK_URL', 'https://webapi-test.joymap.tw/credit-card/callback');
     }
 
-    public function auth($params)
+    public function getAmountMultiplicand(): int
+    {
+        return 100;
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function setStore(Store $store): Hitrustpay
+    {
+        $this->store = $store;
+        if (!$this->store->qrcode_no) {
+            throw new \Exception('商店沒有 store_id', 422);
+        }
+        return $this;
+    }
+
+    public function bindCard(array $params)
     {
         $params = [
             'Type' => 'Auth',
-            'storeid' => $params['storeId'],
+            'storeid' => $this->store->qrcode_no ?? $params['storeId'],
             'ordernumber' => $params['orderNumber'],
             'amount' => $params['amount'],
             'orderdesc' => $params['orderDesc'],
@@ -45,7 +64,7 @@ class Hitrustpay
     {
         $params = [
             'Type' => 'AuthRe',
-            'storeid' => $params['storeId'],
+            'storeid' => $this->store->qrcode_no ?? $params['storeId'],
             'ordernumber' => $params['orderNumber'],
             'queryflag' => $params['queryFlag'] ?? 1,
             'merUpdateURL' => $params['callbackUrl'] ?? $this->callbackUrl,
@@ -54,11 +73,11 @@ class Hitrustpay
         return $this->post($params);
     }
 
-    public function refund($params)
+    public function cancel(array $params)
     {
         $params = [
             'Type' => 'Refund',
-            'storeid' => $params['storeId'],
+            'storeid' => $this->store->qrcode_no ?? $params['storeId'],
             'ordernumber' => $params['orderNumber'],
             'amount' => $params['amount'],
             'queryflag' => $params['queryFlag'] ?? 1,
@@ -68,11 +87,11 @@ class Hitrustpay
         return $this->post($params);
     }
 
-    public function authTrxToken($params)
+    public function pay(array $params)
     {
         $params = [
             'Type' => 'AUTH_TRXTOKEN',
-            'storeid' => $params['storeId'],
+            'storeid' => $this->store->qrcode_no ?? $params['storeId'],
             'ordernumber' => $params['orderNumber'],
             'amount' => $params['amount'],
             'orderdesc' => $params['orderDesc'],
@@ -80,11 +99,17 @@ class Hitrustpay
             'queryflag' => $params['queryFlag'] ?? 1,
             'returnURL' => $params['returnUrl'] ?? $this->callbackUrl,
             'merUpdateURL' => $params['callbackUrl'] ?? $this->callbackUrl,
-            'trxToken' => $params['trxToken'],
+            'trxToken' => $params['token'],
             'expiry' => $params['expiry'],
         ];
 
         return $this->post($params);
+    }
+
+    public function query(array $params)
+    {
+        // TODO: Implement query() method.
+        return [];
     }
 
     public function post($params, $getUrl = false)
@@ -133,13 +158,14 @@ class Hitrustpay
      * @param int $component
      * @return array|false|int|mixed|string|null
      */
-    private function mb_parse_url($url, $component = -1) {
-        $encodedUrl = preg_replace_callback('%[^:/?#=\.]+%usD', function($matches) {
+    private function mb_parse_url($url, $component = -1)
+    {
+        $encodedUrl = preg_replace_callback('%[^:/?#=\.]+%usD', function ($matches) {
             return urlencode($matches[0]);
         }, $url);
         $components = parse_url($encodedUrl, $component);
         if (is_array($components)) {
-            foreach($components as &$part) {
+            foreach ($components as &$part) {
                 if (is_string($part)) {
                     $part = urldecode($part);
                 }

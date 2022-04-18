@@ -48,4 +48,9 @@ class Order extends Model
     {
         return $this->hasOne(OrderTimeLog::class);
     }
+
+    public function notificationOrder()
+    {
+        return $this->hasMany(NotificationOrder::class);
+    }
 }
