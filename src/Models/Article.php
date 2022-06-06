@@ -12,4 +12,9 @@ class Article extends Model
 
     protected $guarded  = [];
 
+    public function logs()
+    {
+        return $this->hasMany(ArticleMark::class);
+    }
+
 }
