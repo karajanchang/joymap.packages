@@ -51,4 +51,9 @@ class Member extends Model
     {
         return $this->hasMany(MemberPush::class, 'member_id', 'id');
     }
+
+    public function memberRelation()
+    {
+        return $this->hasOne(MemberRelation::class);
+    }
 }
