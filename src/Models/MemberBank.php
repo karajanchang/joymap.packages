@@ -12,4 +12,8 @@ class MemberBank extends Model
 
     protected $guarded  = [];
 
+    public function bank()
+    {
+        return $this->hasOne(Bank::class);
+    }
 }

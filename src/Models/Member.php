@@ -61,4 +61,9 @@ class Member extends Model
     {
         return $this->hasMany(MemberBonus::class, 'member_id', 'id');
     }
+
+    public function memberBank()
+    {
+        return $this->hasOne(MemberBank::class);
+    }
 }
