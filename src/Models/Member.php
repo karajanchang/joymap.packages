@@ -56,4 +56,9 @@ class Member extends Model
     {
         return $this->hasOne(MemberRelation::class);
     }
+
+    public function memberBonuses()
+    {
+        return $this->hasMany(MemberBonus::class, 'member_id', 'id');
+    }
 }
