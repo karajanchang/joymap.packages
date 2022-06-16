@@ -21,4 +21,9 @@ class NotificationMemberWithdraw extends Model
     {
         return $this->morphOne(Notification::class, 'notify');
     }
+
+    public function member()
+    {
+        return $this->belongsTo(Member::class);
+    }
 }
