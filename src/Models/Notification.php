@@ -16,6 +16,31 @@ class Notification extends Model
 
     protected $guarded = [];
 
+    protected $appends = [
+        'type'
+    ];
+
+    /**
+     * type
+     * 通知類型
+     *
+     * @return void
+     */
+    public function getTypeAttribute()
+    {
+        switch ($this->notify_type) {
+            case 'notification_platform':
+                return 'platform';
+            case 'notification_order':
+                return 'order';
+            case 'notification_store_pay':
+                return 'store_pay';
+            case 'notification_member_withdraw':
+                return 'member_withdraw';
+            default:
+                return null;
+        }
+    }
 
     /* -------------------------------------------------------------------------- */
     /*                                  RELATIONS                                 */
