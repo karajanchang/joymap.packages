@@ -57,6 +57,16 @@ class Member extends Model
         return $this->hasOne(MemberRelation::class);
     }
 
+    public function relationChilren()
+    {
+        return $this->hasMany(MemberRelation::class, 'parent_member_id', 'id');
+    }
+
+    public function relationGrandChilren()
+    {
+        return $this->hasMany(MemberRelation::class, 'grand_parent_member_id', 'id');
+    }
+
     public function memberBonuses()
     {
         return $this->hasMany(MemberBonus::class, 'member_id', 'id');
