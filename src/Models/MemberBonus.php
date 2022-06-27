@@ -20,7 +20,7 @@ class MemberBonus extends Model
 
     public function paylog()
     {
-        return $this->belongsTo(PayLog::class);
+        return $this->belongsTo(PayLog::class, 'pay_log_id', 'id');
     }
 
      /**
