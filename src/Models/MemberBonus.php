@@ -1,6 +1,7 @@
 <?php
 
 namespace Joymap\Models;
+
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -23,20 +24,35 @@ class MemberBonus extends Model
         return $this->belongsTo(PayLog::class, 'pay_log_id', 'id');
     }
 
-     /**
+    /**
      * MemberMonthBonusPayAmount
      * 取得每一個有獲得分潤的會員該月實際刷卡金額和分潤金額
      * @param  string $year 年份
      * @param  string $month 月份
      * @return mixed
      */
-    public static function MemberMonthBonusPayAmount(string $year, string $month)
+    public static function MemberMonthBonusPayAmount(string $year, string $month, $memberId = null, $status = null)
     {
         $date = Carbon::createFromDate($year, $month);
         $year = $date->format('Y');
         $month = $date->format('n');
         $firstDayofMonth = $date->startOfMonth()->format('Y-m-d 00:00:00');
         $lastDayofMonth = $date->endOfMonth()->format('Y-m-d 23:59:59');
+
+        if (!isset($status) || is_null($status)) {
+            $status = 0;
+        }
+        $condition = "
+                status = $status
+            AND 
+                year = $year 
+            AND 
+                month = $month
+        ";
+
+        if (isset($memberId) && !is_null($memberId)) {
+            $condition .= " AND member_id = $memberId ";
+        }
 
         return self::hydrate(DB::select("
             SELECT
@@ -52,11 +68,7 @@ class MemberBonus extends Model
                     FROM
                         `member_bonus`
                     WHERE
-                        status = 0 
-                    AND 
-                        year = $year 
-                    AND 
-                        month = $month
+                        $condition
                     GROUP BY
                         member_id
                 ) AS mb
