@@ -57,12 +57,12 @@ class Member extends Model
         return $this->hasOne(MemberRelation::class);
     }
 
-    public function relationChilren()
+    public function relationChildren()
     {
         return $this->hasMany(MemberRelation::class, 'parent_member_id', 'id');
     }
 
-    public function relationGrandChilren()
+    public function relationGrandChildren()
     {
         return $this->hasMany(MemberRelation::class, 'grand_parent_member_id', 'id');
     }
