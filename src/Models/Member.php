@@ -76,4 +76,9 @@ class Member extends Model
     {
         return $this->hasOne(MemberBank::class);
     }
+
+    public function deleteLogs()
+    {
+        return $this->hasMany(MemberDeleteLog::class, 'member_id', 'id');
+    }
 }
