@@ -51,4 +51,34 @@ class Member extends Model
     {
         return $this->hasMany(MemberPush::class, 'member_id', 'id');
     }
+
+    public function memberRelation()
+    {
+        return $this->hasOne(MemberRelation::class);
+    }
+
+    public function relationChildren()
+    {
+        return $this->hasMany(MemberRelation::class, 'parent_member_id', 'id');
+    }
+
+    public function relationGrandChildren()
+    {
+        return $this->hasMany(MemberRelation::class, 'grand_parent_member_id', 'id');
+    }
+
+    public function memberBonuses()
+    {
+        return $this->hasMany(MemberBonus::class, 'member_id', 'id');
+    }
+
+    public function memberBank()
+    {
+        return $this->hasOne(MemberBank::class);
+    }
+
+    public function deleteLogs()
+    {
+        return $this->hasMany(MemberDeleteLog::class, 'member_id', 'id');
+    }
 }
