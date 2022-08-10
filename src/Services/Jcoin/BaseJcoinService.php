@@ -268,4 +268,28 @@ abstract class BaseJcoinService
 
         return $this->callApi('POST', '/coin-withdrawn', $data, $rule);
     }
+
+    /**
+     * 即將過期的用戶和點數
+     * @param array $data
+     * @return void
+     */
+    public function expired(array $data)
+    {
+        $rule = [
+            'start_ts' => 'required|numeric',
+            'end_ts' => 'required|numeric|gte:start_ts',
+        ];
+
+        try {
+            $data = $this->valid($data, $rule);
+        } catch (ValidationException $e) {
+            $this->validLogs("JCOIN Valid Fail",'expired', $data, $e);
+            return false;
+        }
+
+        $url = '/expired/'.$data['start_ts'].','.$data['end_ts'];
+
+        return $this->callApi('GET', $url, $data);
+    }
 }
