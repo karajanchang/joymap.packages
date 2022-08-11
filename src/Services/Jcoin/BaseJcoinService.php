@@ -202,7 +202,6 @@ abstract class BaseJcoinService
     {
         $data = [
             'mobile' => $phone,
-            'fuck' => 'yout'
         ];
 
         $rule = [
