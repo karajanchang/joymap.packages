@@ -81,4 +81,9 @@ class Member extends Model
     {
         return $this->hasMany(MemberDeleteLog::class, 'member_id', 'id');
     }
+
+    public function jcUser()
+    {
+        return $this->hasOne(JcUser::class);
+    }
 }
