@@ -14,6 +14,6 @@ class ChargePlan extends Model
 
     public function members()
     {
-        return $this->hasMany(Member::class);
+        return $this->belongsToMany(Member::class, 'member_charge_plan', 'charge_plan_id', 'member_id')->withPivot('created_at');
     }
 }
