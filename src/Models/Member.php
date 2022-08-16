@@ -86,4 +86,9 @@ class Member extends Model
     {
         return $this->hasOne(JcUser::class);
     }
+
+    public function chargePlan()
+    {
+        return $this->belongsTo(ChargePlan::class);
+    }
 }
