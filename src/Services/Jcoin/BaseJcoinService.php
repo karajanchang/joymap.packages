@@ -134,6 +134,9 @@ abstract class BaseJcoinService
     {
         $rules = [
             'title' => 'required|string',
+            'use_member_id' => 'required|int',
+            'use_mobile' => 'required|string|regex:/^09[0-9]{8}/|size:10',
+            'transaction_type' => 'required|int',
             'user_id' => 'required|string',
             'token' => 'required|string',
             'coins' => 'required|integer',
@@ -156,6 +159,9 @@ abstract class BaseJcoinService
     {
         $rule = [
             'title' => 'required|string',
+            'use_member_id' => 'required|int',
+            'use_mobile' => 'required|string|regex:/^09[0-9]{8}/|size:10',
+            'transaction_type' => 'required|int',
             'user_id' => 'required|string',
             'token' => 'required|string',
             'coins' => 'required|integer',
@@ -240,6 +246,9 @@ abstract class BaseJcoinService
     {
         $rule = [
             'title' => 'required|string',
+            'use_member_id' => 'required|int',
+            'use_mobile' => 'required|string|regex:/^09[0-9]{8}/|size:10',
+            'transaction_type' => 'required|int',
             'user_id' => 'required|string',
             'token' => 'required|string',
             'coins' => 'required|integer',
@@ -259,6 +268,9 @@ abstract class BaseJcoinService
     {
         $rule = [
             'user_id' => 'required|string',
+            'use_member_id' => 'required|int',
+            'use_mobile' => 'required|string|regex:/^09[0-9]{8}/|size:10',
+            'transaction_type' => 'required|int',
             'token' => 'required|string',
             'coins' => 'required|integer',
             'order_id' => 'sometimes|nullable|string',
