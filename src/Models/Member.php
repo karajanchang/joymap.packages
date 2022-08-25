@@ -96,4 +96,9 @@ class Member extends Model
     {
         return $this->belongsToMany(ChargePlan::class, 'member_charge_plan','member_id','charge_plan_id')->withPivot('created_at');
     }
+
+    public function memberLoginLogs()
+    {
+        return $this->hasMany(MemberLoginLog::class);
+    }
 }
