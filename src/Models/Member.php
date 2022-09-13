@@ -87,14 +87,14 @@ class Member extends Model
         return $this->hasOne(JcUser::class);
     }
 
-    public function chargePlan()
-    {
-        return $this->belongsTo(ChargePlan::class);
-    }
-
     public function chargePlans()
     {
-        return $this->belongsToMany(ChargePlan::class, 'member_charge_plan','member_id','charge_plan_id')->withPivot('created_at');
+        return $this->belongsToMany(ChargePlan::class, 'member_charge_plan','member_id','charge_plan_id')->withPivot('status','receiver','receiver_phone','receiver_address');
+    }
+
+    public function memberChargePlans()
+    {
+        return $this->hasMany(MemberChargePlan::class);
     }
 
     public function memberLoginLogs()
