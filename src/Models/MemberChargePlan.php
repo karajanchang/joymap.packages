@@ -10,6 +10,8 @@ class MemberChargePlan extends Model
 
     protected $table = "member_charge_plan";
 
+    public $timestamps = false;
+
     protected $guarded  = [];
 
     public function member()

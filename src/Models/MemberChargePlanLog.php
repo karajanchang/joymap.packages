@@ -10,6 +10,10 @@ class MemberChargePlanLog extends Model
 
     protected $table = "member_charge_plan_log";
 
+    public $timestamps = ["created_at"];
+
+    const UPDATED_AT = null;
+
     protected $guarded  = [];
 
     public function memberChargePlan()
