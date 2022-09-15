@@ -101,4 +101,21 @@ class Member extends Model
     {
         return $this->hasMany(MemberLoginLog::class);
     }
+
+    /**
+     * chargePlanEligible
+     * 是否有開通樂粉回饋方案
+     * @return void
+     */
+    public function chargePlanEligible()
+    {
+        $needle = [1]; //樂粉回饋方案 ID
+        $memberChargePlans = $this->memberChargePlans();
+        foreach ($needle as $chargePlanId) {
+            if ($memberChargePlans->where('charge_plan_id', $chargePlanId)->where('status', 2)->exists()) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
