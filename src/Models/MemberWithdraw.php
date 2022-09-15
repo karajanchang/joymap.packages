@@ -17,4 +17,9 @@ class MemberWithdraw extends Model
         return $this->belongsTo(Member::class);
     }
 
+    public function bank()
+    {
+        return $this->belongsTo(Bank::class, 'id', 'bank_id');
+    }
+
 }
