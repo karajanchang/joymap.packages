@@ -3,6 +3,7 @@
 namespace Joymap\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\DB;
 
 class Member extends Model
 {
@@ -117,5 +118,38 @@ class Member extends Model
             }
         }
         return false;
+    }
+
+    /**
+     * firstOpenChargePlanTime
+     * 第一次樂粉回饋開通時間
+     * @return void
+     */
+    public function firstOpenChargePlanTime()
+    {
+        $sub = DB::table(function ($query) {
+            $query->from('member_charge_plan')
+                ->select('id', 'member_id', 'charge_plan_id')
+                ->where('status', 2);
+        }, 'member_charge_plan')
+            ->leftJoinSub(function ($query) {
+                $query->from('member_charge_plan_log')
+                    ->select('member_charge_plan_id', 'type', 'created_at')
+                    ->where('type', 2);
+            }, 'member_charge_plan_log', 'member_charge_plan_log.member_charge_plan_id', '=', 'member_charge_plan.id')
+            ->select([
+                'member_charge_plan.member_id as member_id',
+            ])
+            ->selectRaw("MIN(member_charge_plan_log.created_at) as first_open_member_charge_plan_created_at")
+            ->groupBy('member_charge_plan.member_id');
+
+        return $this->from('members as members')
+            ->leftJoinSub($sub, 'mcp', 'mcp.member_id', '=', 'members.id')
+            ->where('members.id', $this->id)
+            ->select([
+                'mcp.first_open_member_charge_plan_created_at'
+            ])
+            ->first()
+            ->first_open_member_charge_plan_created_at ?? null;
     }
 }
