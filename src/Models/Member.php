@@ -152,4 +152,39 @@ class Member extends Model
             ->first()
             ->first_open_member_charge_plan_created_at ?? null;
     }
+
+    /**
+     * memberIdentityIntegrity
+     * 檢查會員銀行帳戶資料完整性
+     *
+     * @return void
+     */
+    public function memberIdentityIntegrity()
+    {
+        if ($this->is_foreigner == 1) {
+            if (empty($this->passport_number)) {
+                return false;
+            }
+            if (empty($this->ui_number)) {
+                return false;
+            }
+            if (empty($this->foreigner_birthday)) {
+                return false;
+            }
+        } else {
+            if (empty($this->id_number)) {
+                return false;
+            }
+        }
+
+        if (empty($this->memberBank->images_front)) {
+            return false;
+        }
+
+        if (empty($this->memberBank->images_back)) {
+            return false;
+        }
+
+        return true;
+    }
 }
