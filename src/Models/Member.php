@@ -4,6 +4,7 @@ namespace Joymap\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 
 class Member extends Model
 {
@@ -177,11 +178,16 @@ class Member extends Model
             }
         }
 
-        if (empty($this->memberBank->images_front)) {
+        $frontUrl = env('API_URL', 'https://webapi-test.joymap.tw') . '/v2/member/identity/' . $this->id . '/front';
+        $backUrl = env('API_URL', 'https://webapi-test.joymap.tw') . '/v2/member/identity/' . $this->id . '/back';
+        $frontRes = Http::withHeaders(['domain' => env('ADMIN_DOMAIN')])->get($frontUrl);
+        $backRes = Http::withHeaders(['domain' => env('ADMIN_DOMAIN')])->get($backUrl);
+
+        if ($frontRes->status() !== 200) {
             return false;
         }
 
-        if (empty($this->memberBank->images_back)) {
+        if ($backRes->status() !== 200) {
             return false;
         }
 
