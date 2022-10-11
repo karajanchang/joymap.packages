@@ -180,14 +180,20 @@ class Member extends Model
 
         $frontUrl = env('API_URL', 'https://webapi-test.joymap.tw') . '/v2/member/identity/' . $this->id . '/front';
         $backUrl = env('API_URL', 'https://webapi-test.joymap.tw') . '/v2/member/identity/' . $this->id . '/back';
+        $accountUrl = env('API_URL', 'https://webapi-test.joymap.tw') . '/v2/member/identity/' . $this->id . '/account';
         $frontRes = Http::withHeaders(['domain' => env('ADMIN_DOMAIN')])->get($frontUrl);
         $backRes = Http::withHeaders(['domain' => env('ADMIN_DOMAIN')])->get($backUrl);
+        $accountRes = Http::withHeaders(['domain' => env('ADMIN_DOMAIN')])->get($accountUrl);
 
         if ($frontRes->status() !== 200) {
             return false;
         }
 
         if ($backRes->status() !== 200) {
+            return false;
+        }
+
+        if ($accountRes->status() !== 200) {
             return false;
         }
 
