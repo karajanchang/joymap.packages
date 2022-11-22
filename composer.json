@@ -13,9 +13,9 @@
     ],
     "require": {
         "php": "^7.4|^8.0",
-        "illuminate/database": "^8.42",
+        "illuminate/database": "^8.42|^9.0",
         "zhyu/packages": "^0.4.0.14",
-        "illuminate/support": "^8.42"
+        "illuminate/support": "^8.42|^9.0"
     },
     "autoload": {
         "psr-4": {
