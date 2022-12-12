@@ -37,6 +37,8 @@ class Notification extends Model
                 return 'store_pay';
             case 'notification_member_withdraw':
                 return 'member_withdraw';
+            case 'notification_new_register':
+                return 'new_register';
             default:
                 return null;
         }
