@@ -166,4 +166,14 @@ class Store extends Model
     {
         return $this->hasOne(NotificationStorePay::class);
     }
+
+    public function storeFloors()
+    {
+        return $this->hasMany(StoreFloor::class);
+    }
+
+    public function storeTableCombinations()
+    {
+        return $this->hasMany(StoreTableCombination::class);
+    }
 }
