@@ -10,6 +10,8 @@ class StoreTableCombineSetting extends Model
 
     protected $table = 'store_table_combine_setting';
 
+    public $incrementing = false;
+
     public $timestamps = true;
 
     protected $guarded = [];
