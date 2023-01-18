@@ -4,7 +4,7 @@ namespace Joymap\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class StoreTableCombinationSetting extends Model
+class StoreTableCombineSetting extends Model
 {
     use HasFactory;
 
