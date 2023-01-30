@@ -26,6 +26,6 @@ class StoreTable extends Model
 
     public function combineTables()
     {
-        return $this->hasManyThrough(StoreTable::class, StoreTableCombineSetting::class, 'store_table_id', 'combine_table_id');
+        return $this->belongsToMany(StoreTable::class,'store_table_combine_setting','store_table_id','combine_table_id');
     }
 }
