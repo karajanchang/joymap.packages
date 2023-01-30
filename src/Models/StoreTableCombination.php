@@ -20,17 +20,17 @@ class StoreTableCombination extends Model
 
     public function store()
     {
-        return $this->belongsTo(Store::class);
+        return $this->belongsTo(\App\Models\Store::class);
     }
 
     public function storeFloor()
     {
-        return $this->belongsTo(StoreFloor::class);
+        return $this->belongsTo(\App\Models\StoreFloor::class);
     }
 
     public function storeTable()
     {
-        return $this->belongsTo(StoreTable::class);
+        return $this->belongsTo(\App\Models\StoreTable::class);
     }
 
 }

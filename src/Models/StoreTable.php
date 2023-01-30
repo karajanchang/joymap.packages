@@ -16,16 +16,16 @@ class StoreTable extends Model
 
     public function storeFloor()
     {
-        return $this->belongsTo(StoreFloor::class);
+        return $this->belongsTo(\App\Models\StoreFloor::class);
     }
 
     public function storeTableCombinations()
     {
-        return $this->hasMany(StoreTableCombination::class);
+        return $this->hasMany(\App\Models\StoreTableCombination::class);
     }
 
     public function combineTables()
     {
-        return $this->belongsToMany(StoreTable::class,'store_table_combine_setting','store_table_id','combine_table_id');
+        return $this->belongsToMany(\App\Models\StoreTable::class,'store_table_combine_setting','store_table_id','combine_table_id');
     }
 }

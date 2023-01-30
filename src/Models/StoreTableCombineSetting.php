@@ -18,12 +18,12 @@ class StoreTableCombineSetting extends Model
 
     public function storeTable()
     {
-        return $this->belongsTo(StoreTable::class);
+        return $this->belongsTo(\App\Models\StoreTable::class);
     }
 
     public function combineTable()
     {
-        return $this->belongsTo(Store::class, 'combine_table_id');
+        return $this->belongsTo(\App\Models\Store::class, 'combine_table_id');
     }
 
 }
