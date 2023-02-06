@@ -19,11 +19,6 @@ class StoreTable extends Model
         return $this->belongsTo(\App\Models\StoreFloor::class);
     }
 
-    public function storeTableCombinations()
-    {
-        return $this->hasMany(\App\Models\StoreTableCombination::class);
-    }
-
     public function combineTables()
     {
         return $this->belongsToMany(\App\Models\StoreTable::class,'store_table_combine_setting','store_table_id','combine_table_id');

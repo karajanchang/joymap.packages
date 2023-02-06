@@ -27,10 +27,4 @@ class StoreTableCombination extends Model
     {
         return $this->belongsTo(\App\Models\StoreFloor::class);
     }
-
-    public function storeTable()
-    {
-        return $this->belongsTo(\App\Models\StoreTable::class);
-    }
-
 }
