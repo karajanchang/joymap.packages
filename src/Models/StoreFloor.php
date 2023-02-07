@@ -28,4 +28,9 @@ class StoreFloor extends Model
     {
         return $this->hasMany(\App\Models\StoreTableCombination::class);
     }
+
+    public function storeFloorMap()
+    {
+        return $this->hasOne(\App\Models\StoreFloorMap::class);
+    }
 }
