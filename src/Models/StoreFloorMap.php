@@ -14,6 +14,10 @@ class StoreFloorMap extends Model
 
     protected $guarded = [];
 
+    protected $casts = [
+        'map' => 'array',
+    ];
+
     public function store()
     {
         return $this->belongsTo(\App\Models\StoreFloor::class);
