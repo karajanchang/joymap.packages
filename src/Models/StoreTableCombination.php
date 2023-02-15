@@ -18,6 +18,11 @@ class StoreTableCombination extends Model
         'combination' => 'array',
     ];
 
+    public function orders()
+    {
+        return $this->hasMany(\App\Models\Order::class);
+    }
+
     public function store()
     {
         return $this->belongsTo(\App\Models\Store::class);

@@ -169,11 +169,16 @@ class Store extends Model
 
     public function storeFloors()
     {
-        return $this->hasMany(StoreFloor::class);
+        return $this->hasMany(\App\Models\StoreFloor::class);
     }
 
     public function storeTableCombinations()
     {
-        return $this->hasMany(StoreTableCombination::class);
+        return $this->hasMany(\App\Models\StoreTableCombination::class);
+    }
+        
+    public function tables()
+    {
+        return $this->hasManyThrough(\App\Models\StoreTable::class, \App\Models\StoreFloor::class);
     }
 }
