@@ -181,4 +181,9 @@ class Store extends Model
     {
         return $this->hasManyThrough(\App\Models\StoreTable::class, \App\Models\StoreFloor::class);
     }
+
+    public function blockOrderHour()
+    {
+        return $this->hasMany(\App\Models\BlockOrderHour::class);
+    }
 }
