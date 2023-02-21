@@ -186,4 +186,9 @@ class Store extends Model
     {
         return $this->hasMany(\App\Models\BlockOrderHour::class);
     }
+    
+    public function canOrderTimes()
+    {
+        return $this->hasMany(\App\Models\CanOrderTime::class);
+    }
 }
