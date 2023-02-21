@@ -53,4 +53,9 @@ class Order extends Model
     {
         return $this->hasMany(NotificationOrder::class);
     }
+
+    public function orderTags()
+    {
+        return $this->belongsToMany(\App\Models\StoreTag::class, 'order_tag_settings', 'order_id', 'store_tag_id');
+    }
 }
