@@ -18,4 +18,9 @@ class StoreNotification extends Model
     {
         return $this->belongsTo(Store::class);
     }
+
+    public function order()
+    {
+        return $this->belongsTo(Order::class);
+    }
 }
