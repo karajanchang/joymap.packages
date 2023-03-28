@@ -191,4 +191,9 @@ class Store extends Model
     {
         return $this->hasMany(\App\Models\CanOrderTime::class);
     }
+
+    public function wallet()
+    {
+        return $this->hasMany(\App\Models\Wallet::class);
+    }
 }
