@@ -8,9 +8,9 @@ class MemberBank extends Model
 {
     use HasFactory;
 
-    protected $table = "member_bank";
+    protected $table = "account_bank"; //rename memberbank -> account_bank
 
-    protected $guarded  = [];
+    protected $guarded = [];
 
     public function bank()
     {
