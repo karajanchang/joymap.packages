@@ -7,6 +7,7 @@ use Joymap\Models\AdminRole;
 use Joymap\Models\AdminUser;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 
 class SuperAdminSeeder extends Seeder
 {
