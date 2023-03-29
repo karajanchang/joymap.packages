@@ -2,7 +2,7 @@
 
 namespace Joymap\database\seeders;
 
-use App\Models\AdminResource;
+use Joymap\Models\AdminResource;
 use Illuminate\Database\Seeder;
 
 class AdminResourcesSeeder extends Seeder

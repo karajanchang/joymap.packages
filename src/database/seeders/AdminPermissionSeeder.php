@@ -2,8 +2,8 @@
 
 namespace Joymap\database\seeders;
 
-use App\Models\AdminPermission;
-use App\Models\AdminResource;
+use Joymap\Models\AdminPermission;
+use Joymap\Models\AdminResource;
 use Joymap\Services\Admin\AdminResourceService;
 use Illuminate\Database\Seeder;
 
@@ -16,13 +16,13 @@ class AdminPermissionSeeder extends Seeder
      */
     public function run()
     {
-        $resources = \App\Models\AdminResource::where('parent_id', 0)->orderBy('sort')->get();
+        $resources = AdminResource::where('parent_id', 0)->orderBy('sort')->get();
 
         foreach ($resources as $r1) {
 
             $this->createCRUDPermission($r1->id, $r1->name);
 
-            $r2s = \App\Models\AdminResource::where('parent_id', $r1->id)->orderBy('sort')->get();
+            $r2s = AdminResource::where('parent_id', $r1->id)->orderBy('sort')->get();
 
             foreach ($r2s as $r2) {
                 $name = "{$r1->name}.{$r2->name}";
@@ -37,7 +37,7 @@ class AdminPermissionSeeder extends Seeder
 
         foreach ($serv->permissions as $key => $crud) {
             $permissionName = $name . ".$crud";
-            \App\Models\AdminPermission::create([
+            AdminPermission::create([
                 'name' => $permissionName,
                 'resource_id' => $resource_id
             ]);

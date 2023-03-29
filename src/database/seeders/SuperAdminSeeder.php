@@ -2,9 +2,9 @@
 
 namespace Joymap\database\seeders;
 
-use App\Models\AdminPermission;
-use App\Models\AdminRole;
-use App\Models\AdminUser;
+use Joymap\Models\AdminPermission;
+use Joymap\Models\AdminRole;
+use Joymap\Models\AdminUser;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -25,7 +25,8 @@ class SuperAdminSeeder extends Seeder
         $permissions = AdminPermission::all();
 
         foreach ($permissions as $permission) {
-            $role->givePermissionTo($permission);
+            // $role->givePermissionTo($permission);
+            $role->permissions()->attach($permission->id);
         }
 
         $adminUser = [
@@ -58,7 +59,12 @@ class SuperAdminSeeder extends Seeder
 
         foreach ($adminUser as $admin) {
             $user = AdminUser::create($admin);
-            $user->assignRole('super-admin');
+            // $user->assignRole('super-admin');
+            DB::table('model_has_admin_roles')->insert([
+                'role_id' => $role->id,
+                'model_type' => 'App\Models\AdminUser',
+                'model_id' => $user->id
+            ]);
         }
     }
 }
