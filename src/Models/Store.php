@@ -9,10 +9,10 @@ class Store extends Model
 {
     use HasFactory;
 
-    protected static function newFactory()
-    {
-        return \Joymap\database\factories\StoreFactory::new();
-    }
+    // protected static function newFactory()
+    // {
+    //     return \Joymap\database\factories\StoreFactory::new();
+    // }
 
     protected $table = 'stores';
 
