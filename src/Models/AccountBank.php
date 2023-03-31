@@ -4,7 +4,7 @@ namespace Joymap\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class MemberBank extends Model
+class AccountBank extends Model
 {
     use HasFactory;
 
