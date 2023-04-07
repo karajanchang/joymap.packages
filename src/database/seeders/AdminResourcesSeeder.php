@@ -14,6 +14,7 @@ class AdminResourcesSeeder extends Seeder
      */
     public function run()
     {
+        
         $r1Sort = 0;
         $r2Sort = 0;
         $ar = [
