@@ -8,7 +8,7 @@ class Wallet extends Model
 {
     use HasFactory;
 
-    protected $table = 'wallet';
+    protected $table = 'wallets';
 
     protected $guarded = [];
 
