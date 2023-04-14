@@ -91,7 +91,7 @@ class Member extends Model
 
     public function chargePlans()
     {
-        return $this->belongsToMany(ChargePlan::class, 'member_charge_plan','member_id','charge_plan_id')->withPivot('status','receiver','receiver_phone','receiver_address');
+        return $this->belongsToMany(ChargePlan::class, 'member_charge_plan', 'member_id', 'charge_plan_id')->withPivot('status', 'receiver', 'receiver_phone', 'receiver_address');
     }
 
     public function memberChargePlans()
@@ -102,6 +102,18 @@ class Member extends Model
     public function memberLoginLogs()
     {
         return $this->hasMany(MemberLoginLog::class);
+    }
+
+    /**
+     * 大頭貼網址 AvatarUrl
+     */
+    public function getAvatarUrlAttribute()
+    {
+        if ($this->avatar) return $this->avatar;
+        if ($this->gender == 1) {
+            return 'https://storage.googleapis.com/joymap-store/default_avatar/default_m_01.png';
+        }
+        return 'https://storage.googleapis.com/joymap-store/default_avatar/default_f_01.png';
     }
 
     /**
