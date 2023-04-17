@@ -63,4 +63,13 @@ class Order extends Model
     {
         return $this->hasMany(\App\Models\StoreNotification::class);
     }
+
+    /**
+     * 會是抓全部店家的會員標籤，要再 where store_id
+     * @return mixed
+     */
+    public function memberTags()
+    {
+        return $this->belongsToMany(StoreTag::class, 'member_tag_settings', 'member_id', 'store_tag_id', 'member_id');
+    }
 }
