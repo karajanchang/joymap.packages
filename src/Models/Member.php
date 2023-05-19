@@ -104,6 +104,16 @@ class Member extends Model
         return $this->hasMany(MemberLoginLog::class);
     }
 
+    public function memberGrade()
+    {
+        return $this->belongsTo(MemberGrade::class);
+    }
+
+    public function memberDealers()
+    {
+        return $this->hasMany(MemberDealer::class);
+    }
+
     /**
      * 大頭貼網址 AvatarUrl
      */
