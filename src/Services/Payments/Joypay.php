@@ -234,6 +234,33 @@ class Joypay
     /**
      * @throws \Exception
      */
+    public function close()
+    {
+        if (!$this->orderNumber) {
+            throw new \Exception('請呼叫 orderNo()', 422);
+        }
+        if (!$this->amount) {
+            throw new \Exception('請呼叫 money()', 422);
+        }
+        if (!$this->store && !$this->storeId) {
+            throw new \Exception('請呼叫 store() 或 storeId()', 422);
+        }
+
+        $params = [
+            'storeId' => $this->storeId,
+            'orderNumber' => $this->orderNumber,
+            'amount' => $this->amount,
+            'queryFlag' => 1,
+            'callbackUrl' => $this->callbackUrl,
+        ];
+
+        $this->reset();
+        return $this->service->close($params);
+    }
+
+    /**
+     * @throws \Exception
+     */
     public function query()
     {
         if (!$this->orderNumber) {

@@ -87,6 +87,12 @@ class Hitrustpay implements pay
         return $this->post($params);
     }
 
+    public function close(array $params)
+    {
+        // TODO: Implement close() method.
+        return false;
+    }
+
     public function pay(array $params)
     {
         $params = [
@@ -109,7 +115,7 @@ class Hitrustpay implements pay
     public function query(array $params)
     {
         // TODO: Implement query() method.
-        return [];
+        return false;
     }
 
     public function post($params, $getUrl = false)
@@ -143,10 +149,10 @@ class Hitrustpay implements pay
 
             return json_decode($res->getBody()->getContents(), true);
         } catch (ClientException $e) {
-            Log::error(__CLASS__.'::'.__METHOD__.' ClientException: ', [$e]);
+            Log::error(__CLASS__ . '::' . __METHOD__ . ' ClientException: ', [$e]);
         } catch (\Exception $e) {
             $msg = env('APP_DEBUG') === true ? $e->getMessage() : null;
-            Log::error(__CLASS__.'::'.__METHOD__.' error: '.$msg, [$e]);
+            Log::error(__CLASS__ . '::' . __METHOD__ . ' error: ' . $msg, [$e]);
         }
 
         return false;

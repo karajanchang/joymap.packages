@@ -92,6 +92,23 @@ class Spgateway implements pay
         return $this->post($params);
     }
 
+    // 退刷
+    public function close($params)
+    {
+        $this->url = env('SPGATEWAY_CLOSE_URL', 'https://ccore.spgateway.com/API/CreditCard/Close');
+        $params = [
+            'RespondType' => 'JSON',
+            'Version' => '1.0',
+            'Amt' => $params['amount'],
+            'MerchantOrderNo' => $params['orderNumber'],
+            'TimeStamp' => time(),
+            'IndexType' => 1,
+            'CloseType' => 2,
+        ];
+        $params = $this->preparePostData($params);
+        return $this->post($params);
+    }
+
     // 查詢訂單
     public function query($params)
     {
