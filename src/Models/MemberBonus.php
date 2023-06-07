@@ -44,16 +44,36 @@ class MemberBonus extends Model
         }
         $condition = "
                 status = $status
-            AND 
-                year = $year 
-            AND 
+            AND
+                year = $year
+            AND
                 month = $month
         ";
 
         if (isset($memberId) && !is_null($memberId)) {
             $condition .= " AND member_id = $memberId ";
         }
+        //先抓經銷身分
+        $memberDealerBonus = self::selestBonusPayAmount($condition, 1, $firstDayofMonth, $lastDayofMonth);
+        //再抓樂粉身分
+        $condition .= " AND relation_level < 6 ";
+        $memberBonus = self::selestBonusPayAmount($condition, 0, $firstDayofMonth, $lastDayofMonth);
+        //合併
+        $memberBonus->push($memberDealerBonus);
 
+        return $memberBonus;
+    }
+
+    /**
+     * 執行每一個有獲得分潤的會員該月實際刷卡金額和分潤金額
+     * @param  string $condition 語法
+     * @param  bool $dealerGrade 經銷商身分
+     * @param  Carbon $firstDayofMonth 月份(月初)
+     * @param  Carbon $lastDayofMonth 月份(月底)
+     * @return mixed
+     */
+    protected static function selestBonusPayAmount($condition, $dealerGrade, $firstDayofMonth, $lastDayofMonth)
+    {
         return self::hydrate(DB::select("
             SELECT
                 mb.member_id as member_id,
@@ -85,6 +105,10 @@ class MemberBonus extends Model
                 ) AS pl
                 ON
                     mb.member_id = pl.member_id
+                LEFT JOIN members AS m
+                ON
+                    mb.member_id = m.id
+                WHERE m.is_joy_dealer = $dealerGrade
                 GROUP BY
                     mb.member_id
                 ORDER BY mb.member_id ASC
