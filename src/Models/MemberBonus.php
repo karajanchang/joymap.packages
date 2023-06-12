@@ -56,10 +56,10 @@ class MemberBonus extends Model
         //先抓經銷身分
         $memberDealerBonus = self::selestBonusPayAmount($condition, 1, $firstDayofMonth, $lastDayofMonth);
         //再抓樂粉身分
-        $condition .= " AND relation_level < 6 ";
+        $condition .= " AND relation_level < 5 ";
         $memberBonus = self::selestBonusPayAmount($condition, 0, $firstDayofMonth, $lastDayofMonth);
         //合併
-        $memberBonus->push($memberDealerBonus);
+        $memberBonus = $memberBonus->concat($memberDealerBonus);
 
         return $memberBonus;
     }
