@@ -114,11 +114,6 @@ class Member extends Model
         return $this->hasMany(MemberDealer::class);
     }
 
-    public function appVersion()
-    {
-        return $this->hasOne(MemberAppVersion::class);
-    }
-
     /**
      * 大頭貼網址 AvatarUrl
      */
