@@ -36,4 +36,24 @@ class MemberDealer extends Model
     {
         return $this->hasMany(CouponNumber::class);
     }
+
+    public function memberDealerRecommendStores()
+    {
+        return $this->hasMany(MemberDealerRecommendStore::class);
+    }
+
+    public function memberDealerBonuses()
+    {
+        return $this->hasMany(MemberDealerBonus::class);
+    }
+
+    public function memberDealerBonusWithdraws()
+    {
+        return $this->hasMany(MemberDealerBonusWithdraw::class);
+    }
+
+    public function memberBanks()
+    {
+        return $this->hasMany(MemberBank::class, 'member_id', 'member_id');
+    }
 }

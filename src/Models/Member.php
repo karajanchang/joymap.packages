@@ -74,9 +74,9 @@ class Member extends Model
         return $this->hasMany(MemberBonus::class, 'member_id', 'id');
     }
 
-    public function memberBank()
+    public function memberBanks()
     {
-        return $this->hasOne(MemberBank::class);
+        return $this->hasMany(MemberBank::class, 'member_id', 'id');
     }
 
     public function deleteLogs()

@@ -176,7 +176,7 @@ class Store extends Model
     {
         return $this->hasMany(\App\Models\StoreTableCombination::class);
     }
-        
+
     public function tables()
     {
         return $this->hasManyThrough(\App\Models\StoreTable::class, \App\Models\StoreFloor::class);
@@ -186,7 +186,7 @@ class Store extends Model
     {
         return $this->hasMany(\App\Models\BlockOrderHour::class);
     }
-    
+
     public function canOrderTimes()
     {
         return $this->hasMany(\App\Models\CanOrderTime::class);
@@ -195,5 +195,10 @@ class Store extends Model
     public function wallet()
     {
         return $this->hasMany(\App\Models\Wallet::class);
+    }
+
+    public function memberDealerRecommendStore()
+    {
+        return $this->hasOne(MemberDealerRecommendStore::class);
     }
 }
