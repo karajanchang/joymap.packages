@@ -114,6 +114,11 @@ class Member extends Model
         return $this->hasMany(MemberDealer::class);
     }
 
+    public function systemTaskLogs()
+    {
+        return $this->hasMany(SystemTaskLog::class, 'member_id');
+    }
+
     /**
      * 大頭貼網址 AvatarUrl
      */
