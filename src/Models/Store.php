@@ -192,13 +192,23 @@ class Store extends Model
         return $this->hasMany(\App\Models\CanOrderTime::class);
     }
 
-    public function wallet()
+    public function storeWallet()
     {
-        return $this->hasMany(\App\Models\Wallet::class);
+        return $this->hasOne(StoreWallet::class);
+    }
+
+    public function storeWalletBankSetting()
+    {
+        return $this->hasOne(StoreWalletBankSetting::class);
     }
 
     public function memberDealerRecommendStore()
     {
         return $this->hasOne(MemberDealerRecommendStore::class);
+    }
+
+    public function storePayRemindSetting()
+    {
+        return $this->hasOne(StorePayRemindSetting::class);
     }
 }

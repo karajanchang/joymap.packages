@@ -21,4 +21,9 @@ class StoreWalletWithdraw extends Model
     {
         return $this->belongsTo(AdminUser::class);
     }
+
+    public function bank()
+    {
+        return $this->belongsTo(Bank::class);
+    }
 }

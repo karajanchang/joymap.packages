@@ -41,4 +41,9 @@ class StoreWalletTransactionRecord  extends Model
     {
         return $this->belongsTo(AdminUser::class);
     }
+
+    public function storeUser()
+    {
+        return $this->belongsTo(StoreUser::class);
+    }
 }

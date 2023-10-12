@@ -19,6 +19,11 @@ class StoreWalletBankSetting extends Model
 
     public function bank()
     {
-        return $this->belongsTo(bank::class);
+        return $this->belongsTo(Bank::class);
+    }
+
+    public function store()
+    {
+        return $this->belongsTo(Store::class);
     }
 }
