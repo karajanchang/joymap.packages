@@ -214,7 +214,9 @@ class Spgateway implements pay
     private function post($params)
     {
         try {
-            $client = new Client();
+            $client = new Client([
+                'timeout' => 30,
+            ]);
             $res = $client->post(
                 $this->url, [
                     'form_params' => $params,
