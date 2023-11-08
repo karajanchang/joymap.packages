@@ -3,10 +3,12 @@
 namespace Joymap\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class StoreReplie extends Model
+class StoreReply extends Model
 {
     use HasFactory;
+    use SoftDeletes;
 
     protected $table = 'store_replies';
 

@@ -64,7 +64,7 @@ class Store extends Model
 
     public function replies()
     {
-        return $this->hasMany(StoreReplie::class);
+        return $this->hasMany(StoreReply::class);
     }
 
     public function users()

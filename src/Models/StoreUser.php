@@ -31,7 +31,7 @@ class StoreUser extends Model
 
     public function storeReplies()
     {
-        return $this->hasMany(StoreReplie::class);
+        return $this->hasMany(StoreReply::class);
     }
 
     public function passwordValidates()
