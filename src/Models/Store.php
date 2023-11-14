@@ -147,6 +147,11 @@ class Store extends Model
         return $this->hasMany(ActivityLog::class);
     }
 
+    public function activities()
+    {
+        return $this->belongsToMany(Activity::class, 'activity_logs');
+    }
+
     public function activeTags()
     {
       return $this->belongsToMany(Tag::class, 'tag_settings');
