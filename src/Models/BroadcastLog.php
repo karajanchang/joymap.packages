@@ -18,4 +18,9 @@ class BroadcastLog extends Model
     {
         return $this->hasMany(BroadcastClickLog::class);
     }
+
+    public function broadcastBatchLogs()
+    {
+        return $this->hasMany(BroadcastBatchLog::class);
+    }
 }
