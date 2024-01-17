@@ -4,11 +4,11 @@ namespace Joymap\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class MemberDealerPointLog extends Model
+class SubscriptionProgramPayLog extends Model
 {
     use HasFactory;
 
-    protected $table = 'member_dealer_point_logs';
+    protected $table = 'subscription_program_pay_logs';
 
     protected $guarded = [];
 
@@ -22,14 +22,9 @@ class MemberDealerPointLog extends Model
         return $this->belongsTo(Member::class);
     }
 
-    public function memberDealerPointWithdraw()
+    public function store()
     {
-        return $this->hasOne(MemberDealerPointWithdraw::class);
-    }
-
-    public function subscriptionProgramOrder()
-    {
-        return $this->belongsTo(SubscriptionProgramOrder::class);
+        return $this->belongsTo(Store::class);
     }
 
 }

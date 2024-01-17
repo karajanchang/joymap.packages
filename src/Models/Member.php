@@ -119,6 +119,11 @@ class Member extends Model
         return $this->hasMany(SystemTaskLog::class, 'member_id');
     }
 
+    public function subscriptionProgramOrders()
+    {
+        return $this->hasMany(SubscriptionProgramOrder::class);
+    }
+
     /**
      * 大頭貼網址 AvatarUrl
      */
