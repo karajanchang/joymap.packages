@@ -22,9 +22,4 @@ class SubscriptionProgramPayLog extends Model
         return $this->belongsTo(Member::class);
     }
 
-    public function store()
-    {
-        return $this->belongsTo(Store::class);
-    }
-
 }

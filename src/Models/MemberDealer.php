@@ -71,4 +71,19 @@ class MemberDealer extends Model
     {
         return $this->hasMany(SubscriptionProgramOrder::class);
     }
+
+    public function subscriptionProgramPayLogs()
+    {
+        return $this->hasMany(SubscriptionProgramPayLog::class);
+    }
+
+    public function fromInviteDealer()
+    {
+        return $this->belongsTo(MemberDealer::class, 'from_invite_id', 'id');
+    }
+
+    public function inviteChildrens()
+    {
+        return $this->hasMany(MemberDealer::class, 'from_invite_id', 'id');
+    }
 }

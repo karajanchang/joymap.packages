@@ -32,4 +32,8 @@ class SubscriptionProgramOrder extends Model
         return $this->belongsTo(Member::class);
     }
 
+    public function memberDealerPointLog()
+    {
+        return $this->hasOne(MemberDealerPointLog::class);
+    }
 }
