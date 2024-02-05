@@ -16,10 +16,4 @@ class SubscriptionProgramCreditcardLog extends Model
     {
         return $this->belongsTo(SubscriptionProgramPayLog::class);
     }
-
-    public function memberCreditCard()
-    {
-        return $this->belongsTo(MemberCreditCard::class, 'credit_id', 'id');
-    }
-
 }
