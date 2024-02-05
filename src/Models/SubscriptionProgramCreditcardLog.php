@@ -16,4 +16,5 @@ class SubscriptionProgramCreditcardLog extends Model
     {
         return $this->belongsTo(SubscriptionProgramPayLog::class);
     }
+    
 }
