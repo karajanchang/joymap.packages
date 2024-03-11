@@ -79,6 +79,16 @@ class Member extends Model
         return $this->hasMany(MemberBank::class, 'member_id', 'id');
     }
 
+    public function memberBank()
+    {
+        return $this->hasOne(MemberBank::class);
+    }
+
+    public function memberWithdrawApplicationForm()
+    {
+        return $this->hasOne(MemberWithdrawApplicationForm::class);
+    }
+
     public function deleteLogs()
     {
         return $this->hasMany(MemberDeleteLog::class, 'member_id', 'id');
